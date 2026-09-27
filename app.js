@@ -6,6 +6,9 @@
   "use strict";
 
   var REPO = "SebastianSKS/nexushub";
+  // Cuando exista una cuenta para apoyar (GitHub Sponsors, Ko-fi, Open Collective…), pon aquí su dirección https:
+  // aparece el botón «Apoyar el proyecto» y se quita el aviso de que todavía no hay cuenta.
+  var URL_APOYO = "";
   var VERSION_NOVEDADES = "0.2.2";
   var doc = document.documentElement;
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -304,6 +307,23 @@
       }, { rootMargin: "-45% 0px -50% 0px" });
       $$("main .slide").forEach(function (s) { espia.observe(s); }); // las secciones sin enlace (portada, cierre…) dejan la barra sin marcar
     }
+
+    // Apoyo: el botón solo aparece si hay una dirección de apoyo configurada.
+    if (/^https:\/\//.test(URL_APOYO)) {
+      var apoyar = $("#btn-apoyar");
+      apoyar.href = URL_APOYO; apoyar.hidden = false;
+      $("#aviso-apoyo").hidden = true;
+    }
+    // «Copiar el enlace»: usa el menú de compartir del sistema si existe y, si no, copia la dirección.
+    // (Delegado en el documento: al cambiar de idioma el texto de la lista se reescribe y el botón se vuelve a crear.)
+    document.addEventListener("click", function (e) {
+      var compartir = e.target.closest && e.target.closest("#btn-compartir");
+      if (!compartir) return;
+      var datos = { title: "Nexo", text: idioma === "en" ? "Nexo: your degree in one place" : "Nexo: tu carrera en un solo lugar", url: location.href.split("#")[0] };
+      if (navigator.share) { navigator.share(datos).catch(function () {}); return; }
+      var listo = function () { var t = compartir.textContent; compartir.textContent = idioma === "en" ? "Copied!" : "¡Copiado!"; setTimeout(function () { compartir.textContent = t; }, 1800); };
+      if (navigator.clipboard) navigator.clipboard.writeText(datos.url).then(listo).catch(function () {});
+    });
 
     pintarVersion();
     pintarFechas();
