@@ -15,6 +15,7 @@ const falla = (m) => fallos.push(m);
 const refs = [...html.matchAll(/\s(?:src|href)="([^"]+)"/g)].map((m) => m[1]);
 for (const r of new Set(refs)) {
   if (/^(https?:|mailto:|#|data:)/.test(r)) continue;
+  if (r.startsWith("demo/")) continue; // la demo se compila al publicar (ver .github/workflows/pagina.yml)
   if (!fs.existsSync(path.join(raiz, r.split("#")[0]))) falla(`No existe el archivo «${r}»`);
 }
 // La imagen para compartir (og:image) también tiene que existir.
