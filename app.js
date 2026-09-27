@@ -62,7 +62,7 @@
   }
 
   /* ---------- Versión publicada (se lee de GitHub; si falla, todo sigue funcionando con el enlace general) ---------- */
-  var versionPublicada = null, tamanoMB = null, fechas = {};
+  var versionPublicada = null, tamanoMB = null;
   function comparar(a, b) {
     var x = a.split(".").map(Number), y = b.split(".").map(Number);
     for (var i = 0; i < 3; i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) - (y[i] || 0); }
@@ -82,28 +82,13 @@
       el.innerHTML = '<span class="insignia">' + txt + "</span>";
     });
   }
-  // La fecha de cada versión del historial sale de los releases de GitHub; la que aún no se publicó dice «Próximamente».
+  // En el historial, la versión que aún no se publicó dice «Próximamente». (No se muestran fechas: lo que cuenta es lo que cambió.)
   function pintarFechas() {
-    var t = textos[idioma], fmt;
-    try { fmt = new Intl.DateTimeFormat(idioma === "en" ? "en-US" : "es-MX", { year: "numeric", month: "long", day: "numeric" }); } catch (e) { fmt = null; }
+    var t = textos[idioma];
     $$("time[data-version]").forEach(function (el) {
-      var v = el.getAttribute("data-version"), f = fechas[v];
-      if (f && fmt) { el.textContent = fmt.format(new Date(f)); el.setAttribute("datetime", f.slice(0, 10)); }
-      else if (versionPublicada && comparar(v, versionPublicada) > 0) el.textContent = t.proxima2;
-      else el.textContent = "";
+      var v = el.getAttribute("data-version");
+      el.textContent = versionPublicada && comparar(v, versionPublicada) > 0 ? t.proxima2 : "";
     });
-  }
-  function leerFechas() {
-    fetch("https://api.github.com/repos/" + REPO + "/releases?per_page=30", { headers: { Accept: "application/vnd.github+json" } })
-      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-      .then(function (lista) {
-        lista.forEach(function (r) {
-          var v = String(r.tag_name || "").replace(/^v/, "");
-          if (!r.draft && !r.prerelease && r.published_at) fechas[v] = r.published_at;
-        });
-        pintarFechas();
-      })
-      .catch(function () { /* sin red: las versiones se muestran sin fecha */ });
   }
   function leerVersion() {
     if (!window.fetch) return;
@@ -324,7 +309,6 @@
     pintarVersion();
     pintarFechas();
     leerVersion();
-    leerFechas();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar);
