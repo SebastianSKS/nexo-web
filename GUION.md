@@ -10,6 +10,8 @@ Unos **6 a 8 minutos**. Abre la página, pulsa **P** y ve pasando con las flecha
 
 ## 1. Portada · 30 s
 
+El video de la portada (50 s, sin sonido) cuenta lo esencial: puedes dejarlo correr mientras hablas.
+
 > «Esto es Nexo: una app para Windows hecha para estudiantes. En vez de diez pestañas y apps sueltas, un solo lugar para el horario, el calendario, las tareas, los documentos, la música y el video. No pide cuenta, todo se queda en tu computadora y por el momento es gratis.»
 
 ## 2. Tu día · 45 s
@@ -29,6 +31,8 @@ Recorre sin leer todas las tarjetas. Resalta tres:
 Aclara: la música de Spotify pide Premium; lo demás no depende de Spotify.
 
 ## 4. Recorrido · 1 min
+
+Aquí está la **demo**: si hay conexión, abre «Abrir la demo» y enséñala en vivo (es la aplicación real con datos de ejemplo). Es más convincente que cualquier captura.
 
 Usa las teclas **1 a 6** para cambiar de pantalla: Horario, Calendario, Documentos, Dividir un PDF, Calculadora, Configuración. Recuerda que los datos de las capturas son inventados.
 
