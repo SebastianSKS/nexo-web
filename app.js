@@ -266,6 +266,21 @@
       });
     }
 
+    // El enlace de la barra que corresponde a la sección que se está viendo queda marcado.
+    if ("IntersectionObserver" in window) {
+      var enlaces = $$(".enlaces a[href^='#']");
+      var espia = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          enlaces.forEach(function (a) {
+            if (a.getAttribute("href") === "#" + en.target.id) a.setAttribute("aria-current", "true");
+            else a.removeAttribute("aria-current");
+          });
+        });
+      }, { rootMargin: "-45% 0px -50% 0px" });
+      enlaces.forEach(function (a) { var s = $(a.getAttribute("href")); if (s) espia.observe(s); });
+    }
+
     pintarVersion();
     leerVersion();
   }
