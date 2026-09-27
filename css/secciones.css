@@ -43,6 +43,11 @@ h2 kbd { font-size: 0.5em; padding: 0.15em 0.55em; vertical-align: 0.28em; borde
 .extra { margin-top: 36px; color: var(--suave); max-width: 70ch; }
 
 /* Recorrido */
+.demo-llamada { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 32px; margin-bottom: 32px; padding: 20px 24px; border: 1px solid var(--borde-fuerte); border-left: 4px solid var(--ambar); border-radius: 4px; background: var(--capa); }
+.demo-llamada strong { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; }
+.demo-llamada p { margin-top: 4px; color: var(--suave); font-size: 0.97rem; max-width: 62ch; }
+.presentacion .demo-llamada { display: none; }
+
 .pestanas { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 28px; border-bottom: 1px solid var(--borde); }
 .pestanas button { font: inherit; font-weight: 600; font-size: 0.95rem; padding: 12px 20px; margin-bottom: -1px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: var(--suave); cursor: pointer; transition: color 0.15s, border-color 0.15s; }
 .pestanas button:hover { color: var(--texto); }
