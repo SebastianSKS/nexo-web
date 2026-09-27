@@ -56,11 +56,15 @@ Sin cuenta, todo en tu computadora, actualizaciones firmadas y verificadas. El c
 
 Las cifras (0.13 s y 0.7 s) salen de una prueba con el procesador limitado a una sexta parte: son de esa prueba, no una promesa para todos los equipos.
 
-## 10. Empezar · 30 s
+## 10. Historial de versiones · 30 s
+
+Cada versión trajo algo concreto. Menciona una o dos por versión, no todas: los «Primeros pasos» de la 0.2.1, los avisos con sonido de la 0.2.0, el inglés y la búsqueda en Office de la 0.1.4. La 0.2.2 dice «Próximamente» hasta que se publique.
+
+## 11. Empezar · 30 s
 
 Tres pasos: descargar, instalar (sin permisos de administrador) y seguir los «Primeros pasos» de Inicio.
 
-## 11. Preguntas · lo que quede
+## 12. Preguntas · lo que quede
 
 Adelántate a lo que van a preguntar:
 
@@ -70,7 +74,7 @@ Adelántate a lo que van a preguntar:
 - **¿Cuánto cuesta?** Por el momento es gratis. Lo único de pago es Spotify Premium, y eso es de Spotify.
 - **¿Y mis datos?** Se quedan en tu computadora; hay copia de seguridad para pasarlos a otra.
 
-## 12. Cierre · 15 s
+## 13. Cierre · 15 s
 
 > «Descárgala del botón y, si algo falla, se reporta en GitHub. Gracias.»
 
