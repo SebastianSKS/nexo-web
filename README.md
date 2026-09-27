@@ -42,10 +42,26 @@ Español e inglés (botón **EN / ES**), tema «papel» (claro, el de siempre) y
 - `css/`: los estilos, por partes (`base`, `barra`, `portada`, `secciones`, `historial`, `cierre` y `presentacion`).
 - `app.js`: idioma, tema, pestañas, presentación y versión publicada.
 - `assets/capturas/`: capturas de la app con datos inventados.
+- `assets/video/`: el video de la portada (50 s, sin sonido, con subtítulos) y su imagen.
 - `assets/fuentes/`: la tipografía de los titulares (Fraunces, licencia SIL OFL).
 - `tools/`: para rehacer las capturas y comprobar el sitio.
 
 La versión y el enlace de descarga se leen solos del último *release* de GitHub. Si no hay red, el botón lleva a la página de versiones.
+
+## La demo
+
+La página incluye una **demo de la aplicación real** que se prueba en el navegador, con datos de ejemplo, en `/demo/`. No está en este repositorio: al publicar, el flujo de trabajo (`.github/workflows/pagina.yml`) descarga el repositorio de la aplicación, la compila en modo demo y la copia a `/demo`, así que siempre es la última versión. Algunas cosas solo existen en la aplicación para Windows (avisos del sistema, carpetas de materias, búsqueda dentro de archivos) y la propia demo lo avisa.
+
+## Rehacer el video
+
+Con la demo compilada y servida (`NEXT_PUBLIC_DEMO=1 NEXT_PUBLIC_BASE_PATH=/nexo-web/demo npm run build` en el repositorio de la aplicación; copia `out` a una carpeta `nexo-web/demo` y sírvela), genera el horario de ejemplo y graba:
+
+```bash
+python tools/horario-ejemplo.py
+node tools/grabar-video.mjs
+```
+
+Necesita Edge y ffmpeg. Deja `nexo-demo.mp4` en la carpeta temporal.
 
 ## Rehacer las capturas
 
@@ -63,6 +79,10 @@ node tools/comprobar.mjs
 ```
 
 Revisa que las imágenes y los enlaces internos existan, que toda imagen tenga texto alternativo y que todo lo que tiene versión en español tenga también la inglesa.
+
+## Apoyo económico
+
+La sección «Apoya el proyecto» explica las formas gratuitas de ayudar y las metas concretas. Todavía no hay una cuenta para recibir aportes: cuando exista (GitHub Sponsors, Ko-fi, Open Collective…), se pone su dirección `https` en `URL_APOYO` (al principio de `app.js`) y el botón «Apoyar el proyecto» aparece solo.
 
 ## Publicarla
 
