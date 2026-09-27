@@ -17,6 +17,8 @@ for (const r of new Set(refs)) {
   if (/^(https?:|mailto:|#|data:)/.test(r)) continue;
   if (!fs.existsSync(path.join(raiz, r.split("#")[0]))) falla(`No existe el archivo «${r}»`);
 }
+// La imagen para compartir (og:image) también tiene que existir.
+for (const m of html.matchAll(/<meta[^>]*content="(assets\/[^"]+)"/g)) if (!fs.existsSync(path.join(raiz, m[1]))) falla(`No existe la imagen para compartir «${m[1]}»`);
 for (const m of html.matchAll(/data-en-href="([^"]+)"/g)) if (!/^https:/.test(m[1])) falla(`Enlace en inglés que no es https: ${m[1]}`);
 
 // 2. Enlaces a secciones de la misma página.
