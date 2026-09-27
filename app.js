@@ -302,8 +302,7 @@
           });
         });
       }, { rootMargin: "-45% 0px -50% 0px" });
-      enlaces.forEach(function (a) { var s = $(a.getAttribute("href")); if (s) espia.observe(s); });
-      espia.observe($("#inicio")); // en la portada no hay ningún enlace marcado
+      $$("main .slide").forEach(function (s) { espia.observe(s); }); // las secciones sin enlace (portada, cierre…) dejan la barra sin marcar
     }
 
     pintarVersion();
