@@ -34,13 +34,15 @@ El guion completo, con lo que decir en cada sección, está en [GUION.md](GUION.
 
 ## Idioma, tema y color
 
-Español e inglés (botón **EN / ES**), tema claro y oscuro, y el color de acento se cambia en la sección «Hazlo tuyo». Todo se recuerda en el navegador.
+Español e inglés (botón **EN / ES**), tema «papel» (claro, el de siempre) y «tinta» (oscuro), y el color de acento se cambia en la sección «Hazlo tuyo». Todo se recuerda en el navegador.
 
 ## Contenido
 
 - `index.html`: el contenido. El texto está en español; lo que lleva `data-en` (o `data-en-alt`, `data-en-title`…) tiene su versión en inglés.
-- `styles.css`, `app.js`: estilo y comportamiento (idioma, tema, pestañas, presentación, versión publicada).
+- `css/`: los estilos, por partes (`base`, `barra`, `portada`, `secciones`, `historial`, `cierre` y `presentacion`).
+- `app.js`: idioma, tema, pestañas, presentación y versión publicada.
 - `assets/capturas/`: capturas de la app con datos inventados.
+- `assets/fuentes/`: la tipografía de los titulares (Fraunces, licencia SIL OFL).
 - `tools/`: para rehacer las capturas y comprobar el sitio.
 
 La versión y el enlace de descarga se leen solos del último *release* de GitHub. Si no hay red, el botón lleva a la página de versiones.
