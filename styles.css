@@ -47,7 +47,7 @@ body {
 }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
-h1, h2, h3 { font-family: var(--fuente-titulo); line-height: 1.12; margin: 0; letter-spacing: -0.02em; }
+h1, h2, h3 { font-family: var(--fuente-titulo); line-height: 1.08; margin: 0; letter-spacing: -0.03em; }
 p { margin: 0; }
 code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 0.9em; background: var(--capa-2); border: 1px solid var(--borde); border-radius: 6px; padding: 1px 6px; }
 kbd { font-family: inherit; font-size: 0.8em; padding: 0.12em 0.5em; border: 1px solid var(--borde); border-bottom-width: 3px; border-radius: 8px; background: var(--capa); vertical-align: 0.12em; }
@@ -63,7 +63,7 @@ kbd { font-family: inherit; font-size: 0.8em; padding: 0.12em 0.5em; border: 1px
 
 /* Iconos */
 .ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-.ic.grande { width: 30px; height: 30px; color: var(--acento); }
+.ic.grande { box-sizing: content-box; width: 26px; height: 26px; padding: 11px; border-radius: 14px; color: var(--acento); background: color-mix(in srgb, var(--acento) 14%, transparent); border: 1px solid color-mix(in srgb, var(--acento) 28%, transparent); }
 :root[data-theme="dark"] .ic-luna, :root[data-theme="light"] .ic-sol { display: none; }
 
 /* Barra */
@@ -83,8 +83,8 @@ kbd { font-family: inherit; font-size: 0.8em; padding: 0.12em 0.5em; border: 1px
 .boton { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font: inherit; font-weight: 600; text-decoration: none; border-radius: 12px; padding: 10px 18px; border: 1px solid transparent; cursor: pointer; transition: transform 0.15s, background 0.15s, box-shadow 0.15s; }
 .boton.grande { padding: 14px 24px; font-size: 1.05rem; border-radius: 14px; }
 .boton.chico { padding: 8px 14px; font-size: 0.92rem; }
-.boton.primario { background: var(--acento); color: var(--acento-texto); box-shadow: 0 10px 24px -10px var(--acento); }
-.boton.primario:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.boton.primario { background: var(--degradado); color: var(--acento-texto); box-shadow: 0 12px 28px -10px color-mix(in srgb, var(--acento) 80%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+.boton.primario:hover { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 16px 34px -10px color-mix(in srgb, var(--acento) 90%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
 .boton.secundario { background: var(--capa); border-color: var(--borde); color: var(--texto); }
 .boton.secundario:hover { background: var(--capa-2); }
 
@@ -96,9 +96,11 @@ kbd { font-family: inherit; font-size: 0.8em; padding: 0.12em 0.5em; border: 1px
   radial-gradient(700px 400px at -5% 30%, color-mix(in srgb, var(--acento) 14%, transparent), transparent 70%),
   var(--fondo); }
 .hero-in { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr); gap: clamp(28px, 4vw, 56px); align-items: center; }
-.etiqueta { color: var(--acento); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; }
-.hero h1 { font-size: clamp(2.4rem, 5.4vw, 4.1rem); font-weight: 750; }
-.hero h1 em { font-style: normal; background: linear-gradient(90deg, var(--acento), color-mix(in srgb, var(--acento) 45%, #b48cff)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.etiqueta { display: flex; align-items: center; gap: 12px; color: var(--acento); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
+.etiqueta::before { content: ""; width: 28px; height: 2px; border-radius: 2px; background: var(--degradado); flex: none; }
+.centrado .etiqueta { justify-content: center; }
+.hero h1 { font-size: clamp(2.6rem, 5.8vw, 4.6rem); font-weight: 800; }
+.hero h1 em { font-style: normal; background: var(--degradado); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .lead { color: var(--suave); font-size: clamp(1.05rem, 1.6vw, 1.22rem); margin-top: 18px; max-width: 60ch; }
 .cta-fila { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .cta-fila.centrado { justify-content: center; }
@@ -107,7 +109,7 @@ kbd { font-family: inherit; font-size: 0.8em; padding: 0.12em 0.5em; border: 1px
 .confianza .ic { color: var(--acento); }
 
 .encabezado { max-width: 760px; margin-bottom: clamp(28px, 4vw, 48px); }
-.encabezado h2, .texto h2, .centrado h2 { font-size: clamp(1.9rem, 3.8vw, 3rem); font-weight: 720; }
+.encabezado h2, .texto h2, .centrado h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 780; }
 .centrado .lead { margin-inline: auto; }
 
 .dos { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
@@ -132,8 +134,8 @@ kbd { font-family: inherit; font-size: 0.8em; padding: 0.12em 0.5em; border: 1px
 /* Rejilla de funciones */
 .rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 16px; }
 .rejilla.tres-col { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.tarjeta { background: var(--capa); border: 1px solid var(--borde); border-radius: var(--radio); padding: 22px; transition: transform 0.2s, border-color 0.2s; }
-.tarjeta:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--acento) 45%, var(--borde)); }
+.tarjeta { position: relative; background: linear-gradient(180deg, color-mix(in srgb, var(--capa) 100%, transparent), color-mix(in srgb, var(--capa) 70%, var(--fondo))); border: 1px solid var(--borde); border-radius: 18px; padding: 26px; transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s; }
+.tarjeta:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--acento) 55%, var(--borde)); box-shadow: 0 22px 50px -26px color-mix(in srgb, var(--acento) 70%, transparent); }
 .tarjeta h3 { font-size: 1.12rem; margin: 14px 0 8px; letter-spacing: -0.01em; }
 .tarjeta p { color: var(--suave); font-size: 0.97rem; line-height: 1.55; }
 .extra { margin-top: 28px; color: var(--suave); max-width: 70ch; }
