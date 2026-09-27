@@ -149,9 +149,19 @@
       if (alto > disponible) c.style.zoom = String(Math.max(0.5, disponible / alto));
     });
   }
+  var reloj = null, inicioPresentacion = 0;
+  function pintarTiempo() {
+    var seg = Math.floor((Date.now() - inicioPresentacion) / 1000);
+    var m = Math.floor(seg / 60), h = Math.floor(m / 60);
+    var dos = function (n) { return (n < 10 ? "0" : "") + n; };
+    $("#hud-tiempo").textContent = (h ? h + ":" + dos(m % 60) : dos(m)) + ":" + dos(seg % 60);
+  }
   function entrarPresentacion() {
     if (presentando) return;
     presentando = true;
+    inicioPresentacion = Date.now();
+    pintarTiempo();
+    reloj = setInterval(pintarTiempo, 1000); // solo mientras se presenta
     var actual = indiceActual();
     $$("img[loading=lazy]").forEach(function (img) { img.loading = "eager"; });
     doc.classList.add("presentacion");
@@ -163,6 +173,7 @@
   function salirPresentacion() {
     if (!presentando) return;
     presentando = false;
+    clearInterval(reloj);
     var actual = indiceActual();
     doc.classList.remove("presentacion");
     ajustarAlto();
