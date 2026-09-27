@@ -25,7 +25,8 @@ main .slide:nth-of-type(even) { background: var(--fondo-alt); }
 .hero-visual::before { content: ""; position: absolute; inset: 22px 0 0 22px; background: var(--acento); border-radius: 3px; opacity: 0.92; }
 .hero-visual::after { content: ""; position: absolute; right: -14px; top: 26px; width: 44px; height: 44px; border-radius: 50%; background: var(--ambar); }
 .hero-img { position: relative; z-index: 1; margin: 0; border-radius: 4px; overflow: hidden; border: 1px solid var(--borde-fuerte); box-shadow: var(--sombra); background: var(--capa); }
-.hero-img img { width: 100%; }
+.hero-img img, .hero-video { display: block; width: 100%; height: auto; }
+.hero-video { aspect-ratio: 8 / 5; background: var(--capa); }
 .flota { display: none; }
 
 /* Franja de datos: cifras en serif separadas por filetes, sin tarjetas */
