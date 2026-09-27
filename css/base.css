@@ -1,0 +1,90 @@
+/* Nexo · base: fuentes, colores, reinicio y tipografía.
+   Dos temas con el mismo criterio: «papel» (claro, el de siempre) y «tinta» (oscuro).
+   El azul es el del icono; el ámbar, el punto del icono, y solo se usa como toque. */
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("../assets/fuentes/fraunces-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("../assets/fuentes/fraunces-latin-wght-italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --fuente: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --serif: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --alto-barra: 68px;
+  --radio: 6px;
+}
+
+:root[data-theme="light"] {
+  --fondo: #f5f2ea;
+  --fondo-alt: #ece8dd;
+  --capa: #fbf9f4;
+  --borde: #d8d2c3;
+  --borde-fuerte: #b9b29f;
+  --texto: #16181d;
+  --suave: #5a5e67;
+  --acento: #1b4fd8;
+  --acento-texto: #ffffff;
+  --ambar: #f2a20c;
+  --sombra: 0 1px 0 rgba(22, 24, 29, 0.06), 0 28px 50px -30px rgba(40, 34, 10, 0.45);
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --fondo: #101215;
+  --fondo-alt: #15181c;
+  --capa: #1a1d22;
+  --borde: #2a2e35;
+  --borde-fuerte: #454a54;
+  --texto: #f1eee6;
+  --suave: #a6a9b0;
+  --acento: #7397ff;
+  --acento-texto: #0d1220;
+  --ambar: #f5b032;
+  --sombra: 0 1px 0 rgba(255, 255, 255, 0.05), 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--alto-barra) + 8px); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--fuente);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+p { margin: 0; }
+h1, h2, h3 { margin: 0; font-family: var(--serif); font-weight: 600; line-height: 1.08; letter-spacing: -0.02em; font-optical-sizing: auto; }
+h1 em, h2 em { font-style: italic; font-weight: 500; color: var(--acento); }
+code { font-family: var(--mono); font-size: 0.88em; background: var(--fondo-alt); border: 1px solid var(--borde); border-radius: 4px; padding: 1px 6px; }
+kbd { font-family: var(--mono); font-size: 0.78em; padding: 0.1em 0.5em; border: 1px solid var(--borde-fuerte); border-bottom-width: 2px; border-radius: 4px; background: var(--capa); vertical-align: 0.08em; }
+
+.contenedor { width: min(1180px, 100% - 40px); margin-inline: auto; }
+.contenedor.angosto { width: min(820px, 100% - 40px); }
+.centrado { text-align: center; }
+
+.saltar { position: absolute; left: 16px; top: -60px; background: var(--texto); color: var(--fondo); padding: 8px 14px; border-radius: var(--radio); z-index: 100; }
+.saltar:focus { top: 12px; }
+:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; border-radius: 3px; }
+::selection { background: var(--ambar); color: #16181d; }
+
+.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+:root[data-theme="dark"] .ic-luna, :root[data-theme="light"] .ic-sol { display: none; }
+:root[data-theme="dark"] .img-claro, :root[data-theme="light"] .img-oscuro { display: none; }
+
+.lead { color: var(--suave); font-size: clamp(1.06rem, 1.5vw, 1.2rem); margin-top: 20px; max-width: 58ch; }
