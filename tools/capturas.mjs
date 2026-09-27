@@ -13,8 +13,8 @@ const PERFIL = path.join(process.env.TEMP, "nexo-web-perfil");
 fs.rmSync(PERFIL, { recursive: true, force: true });
 
 const edge = spawn(process.env.EDGE ?? "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", [
-  "--headless=new", "--remote-debugging-port=9445", `--user-data-dir=${PERFIL}`, "--window-size=1152,720",
-  "--hide-scrollbars", "--force-device-scale-factor=1.5", "--no-first-run", "--disable-gpu", "about:blank",
+  "--headless=new", "--remote-debugging-port=9445", `--user-data-dir=${PERFIL}`, "--window-size=1280,800",
+  "--hide-scrollbars", "--force-device-scale-factor=1.35", "--no-first-run", "--disable-gpu", "about:blank",
 ], { stdio: "ignore" });
 
 const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -28,7 +28,7 @@ const send = (method, params = {}) => new Promise((r) => { const i = ++id; p.set
 const ev = async (e) => (await send("Runtime.evaluate", { expression: e, returnByValue: true, awaitPromise: true })).result?.value;
 
 await send("Page.enable");
-await send("Emulation.setDeviceMetricsOverride", { width: 1152, height: 720, deviceScaleFactor: 1.5, mobile: false });
+await send("Emulation.setDeviceMetricsOverride", { width: 1280, height: 800, deviceScaleFactor: 1.35, mobile: false });
 const base = process.env.NEXO_URL ?? "http://127.0.0.1:4173";
 
 // El próximo lunes a las 7:15 (hora local): así «Tu día» tiene clase por venir.
