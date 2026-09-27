@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://sebastiansks.github.io/nexo-web/sitemap.xml
