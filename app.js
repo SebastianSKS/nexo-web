@@ -229,6 +229,15 @@
     $("#hud-salir").addEventListener("click", salirPresentacion);
     $("#hud-notas").addEventListener("click", alternarNotas);
     document.addEventListener("keydown", alPulsarTecla);
+    // En pantallas táctiles: deslizar de lado a lado pasa de sección durante la presentación.
+    var x0 = null, y0 = null;
+    document.addEventListener("touchstart", function (e) { if (presentando && e.touches.length === 1) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; } }, { passive: true });
+    document.addEventListener("touchend", function (e) {
+      if (!presentando || x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+      x0 = y0 = null;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) irA(indiceActual() + (dx < 0 ? 1 : -1));
+    }, { passive: true });
     window.addEventListener("resize", function () { if (presentando) ajustarAlto(); });
     document.addEventListener("fullscreenchange", function () { if (!document.fullscreenElement && presentando) salirPresentacion(); });
 
