@@ -201,7 +201,7 @@ kbd { font-family: inherit; font-size: 0.8em; padding: 0.12em 0.5em; border: 1px
 .visto { opacity: 1; transform: none; transition: opacity 0.6s ease, transform 0.6s ease; }
 
 /* Modo presentación: cada sección ocupa toda la pantalla y se pasa con las flechas */
-html.presentacion { scroll-snap-type: y mandatory; scroll-behavior: smooth; scrollbar-width: none; }
+html.presentacion { scroll-padding-top: 0; scroll-snap-type: y mandatory; scroll-behavior: smooth; scrollbar-width: none; }
 html.presentacion::-webkit-scrollbar { display: none; }
 .presentacion .barra, .presentacion .pie { display: none; }
 .presentacion .slide { min-height: 100vh; min-height: 100dvh; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: center; padding: 48px 0 64px; }
