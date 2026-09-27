@@ -61,6 +61,6 @@ Revisa que las imágenes y los enlaces internos existan, que toda imagen tenga t
 
 ## Publicarla
 
-Es un sitio estático: sirve en cualquier lado. Con **GitHub Pages**: *Settings › Pages › Source: GitHub Actions* y cada cambio en `main` se publica solo (ver `.github/workflows/pagina.yml`). También vale arrastrar la carpeta a Netlify o subirla a Vercel.
+Es un sitio estático: sirve en cualquier lado. Con **GitHub Pages**: *Settings › Pages › Source: GitHub Actions* y luego *Actions › Publicar la página › Run workflow* (ver `.github/workflows/pagina.yml`; ahí mismo se explica cómo hacer que se publique sola en cada cambio). También vale arrastrar la carpeta a Netlify o subirla a Vercel.
 
 Antes de publicarla con un dominio propio, pon la dirección completa en `og:image` (`index.html`) para que se vea la tarjeta al compartir el enlace.
