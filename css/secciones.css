@@ -1,0 +1,119 @@
+/* Secciones de contenido. Tipografía y filetes en lugar de tarjetas con brillo. */
+
+.encabezado { max-width: 760px; margin-bottom: clamp(36px, 5vw, 64px); }
+.encabezado h2, .texto h2, .centrado h2 { font-size: clamp(2.1rem, 4.2vw, 3.5rem); font-weight: 600; }
+
+/* Numeración de capítulos: 01, 02… en cada sección menos la portada */
+main { counter-reset: capitulo; }
+main .slide:not(.hero):not(.cierre) { counter-increment: capitulo; }
+main .slide:not(.hero):not(.cierre) .etiqueta::before { content: counter(capitulo, decimal-leading-zero); width: auto; height: auto; background: none; font-family: var(--serif); font-size: 1.05rem; font-weight: 500; letter-spacing: 0; color: var(--ambar); }
+
+.dos { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
+.dos.invertido { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); }
+.dos.invertido .texto { order: 2; }
+
+/* Marco de ventana */
+.ventana { position: relative; margin: 0; border-radius: 4px; overflow: hidden; border: 1px solid var(--borde-fuerte); box-shadow: var(--sombra); background: var(--capa); }
+.ventana img { width: 100%; }
+.marcada { position: relative; }
+.marcada .ventana { overflow: visible; }
+.marcada img { border-radius: 4px; }
+.pin { position: absolute; left: var(--x); top: var(--y); width: 30px; height: 30px; display: grid; place-items: center; transform: translate(-50%, -50%); border-radius: 50%; background: var(--ambar); color: #16181d; font-family: var(--serif); font-weight: 700; font-size: 1rem; box-shadow: 0 0 0 4px color-mix(in srgb, var(--ambar) 30%, transparent), 0 6px 14px -4px rgba(0, 0, 0, 0.5); }
+
+/* Novedad de una versión */
+.nuevo { display: inline-block; }
+.nuevo:empty { display: none; }
+.nuevo .insignia { display: inline-block; padding: 3px 9px; border-radius: 2px; background: var(--ambar); color: #16181d; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* Tu día: los pasos llevan el mismo número que los marcadores de la captura */
+.pasos-num { list-style: none; counter-reset: p; padding: 0; margin: 32px 0 0; display: grid; gap: 20px; }
+.pasos-num li { counter-increment: p; position: relative; padding-left: 52px; color: var(--suave); }
+.pasos-num li::before { content: counter(p); position: absolute; left: 0; top: -2px; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--ambar); color: #16181d; font-family: var(--serif); font-weight: 700; }
+.pasos-num strong { display: block; color: var(--texto); font-family: var(--serif); font-size: 1.2rem; font-weight: 600; letter-spacing: -0.01em; }
+
+/* Funciones: un índice, no una pared de tarjetas */
+.indice { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(32px, 5vw, 80px); border-top: 2px solid var(--texto); counter-reset: fn; }
+.indice li { counter-increment: fn; display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 0 8px; padding: 24px 0; border-bottom: 1px solid var(--borde); }
+.indice li::before { content: counter(fn, decimal-leading-zero); font-family: var(--serif); font-size: 1.05rem; color: var(--ambar); padding-top: 3px; }
+.indice h3 { font-size: 1.32rem; font-weight: 600; letter-spacing: -0.01em; transition: color 0.2s; }
+.indice li:hover h3 { color: var(--acento); }
+.indice p { grid-column: 2; margin-top: 6px; color: var(--suave); font-size: 0.98rem; line-height: 1.55; max-width: 48ch; }
+.extra { margin-top: 36px; color: var(--suave); max-width: 70ch; }
+
+/* Recorrido */
+.pestanas { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 28px; border-bottom: 1px solid var(--borde); }
+.pestanas button { font: inherit; font-weight: 600; font-size: 0.95rem; padding: 12px 20px; margin-bottom: -1px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: var(--suave); cursor: pointer; transition: color 0.15s, border-color 0.15s; }
+.pestanas button:hover { color: var(--texto); }
+.pestanas button[aria-selected="true"] { color: var(--texto); border-bottom-color: var(--ambar); }
+.panel { display: none; margin: 0; }
+.panel.activo { display: block; animation: aparece 0.35s ease; }
+.panel figcaption { margin-top: 18px; color: var(--suave); font-family: var(--serif); font-style: italic; font-size: 1.1rem; }
+@keyframes aparece { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* Listas con guion */
+.lista-ok { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 16px; color: var(--suave); }
+.lista-ok li { position: relative; padding-left: 30px; }
+.lista-ok li::before { content: "—"; position: absolute; left: 0; top: 0; color: var(--ambar); font-weight: 700; }
+.lista-ok strong { color: var(--texto); }
+
+/* Herramientas de documentos: lista en columnas con filetes */
+.chips { list-style: none; padding: 0; margin: 0; column-count: 4; column-gap: 40px; counter-reset: h; border-top: 2px solid var(--texto); }
+.chips li { counter-increment: h; break-inside: avoid; padding: 13px 0; border-bottom: 1px solid var(--borde); font-weight: 500; display: flex; gap: 12px; align-items: baseline; }
+.chips li::before { content: counter(h, decimal-leading-zero); font-family: var(--mono); font-size: 0.72rem; color: var(--ambar); }
+
+/* Hazlo tuyo */
+.acentos { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 36px; }
+.acentos button { width: 38px; height: 38px; border-radius: 4px; border: 0; background: var(--c); cursor: pointer; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15); transition: transform 0.15s; }
+.acentos button:hover { transform: translateY(-2px); }
+.acentos button[aria-pressed="true"] { outline: 2px solid var(--texto); outline-offset: 3px; }
+.tres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.tres figure { margin: 0; }
+.tres figcaption { margin-top: 12px; color: var(--suave); font-family: var(--serif); font-style: italic; font-size: 1.05rem; }
+
+/* Privacidad: tres columnas separadas por filetes */
+.rejilla { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--texto); }
+.tarjeta { padding: 30px 32px 8px 0; }
+.tarjeta + .tarjeta { padding-left: 32px; border-left: 1px solid var(--borde); }
+.tarjeta .ic.grande { width: 30px; height: 30px; color: var(--acento); }
+.tarjeta h3 { font-size: 1.4rem; margin: 18px 0 10px; }
+.tarjeta p { color: var(--suave); font-size: 0.98rem; }
+
+/* Pasos para empezar: números grandes en serif */
+.tres-pasos { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--texto); }
+.tres-pasos li { padding: 28px 32px 8px 0; }
+.tres-pasos li + li { padding-left: 32px; border-left: 1px solid var(--borde); }
+.tres-pasos .num { display: block; font-family: var(--serif); font-size: clamp(3.6rem, 6vw, 5rem); line-height: 1; font-weight: 400; font-style: italic; color: var(--ambar); }
+.tres-pasos h3 { margin: 14px 0 8px; font-size: 1.4rem; }
+.tres-pasos p { color: var(--suave); }
+
+/* Preguntas */
+.faq { border-top: 2px solid var(--texto); }
+.faq details { border-bottom: 1px solid var(--borde); }
+.faq summary { cursor: pointer; padding: 20px 0; font-family: var(--serif); font-size: 1.2rem; font-weight: 550; list-style: none; display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--fuente); font-size: 1.5rem; font-weight: 300; line-height: 1; color: var(--ambar); transition: transform 0.2s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { color: var(--suave); padding: 0 40px 22px 0; max-width: 64ch; }
+
+/* Aparición al desplazarse */
+.oculto-al-inicio { opacity: 0; transform: translateY(14px); }
+.visto { opacity: 1; transform: none; transition: opacity 0.6s ease, transform 0.6s ease; }
+
+@media (max-width: 960px) {
+  .dos, .dos.invertido { grid-template-columns: 1fr; }
+  .dos.invertido .texto { order: 0; }
+  .indice { grid-template-columns: 1fr; }
+  .chips { column-count: 2; }
+  .tres { grid-template-columns: 1fr; }
+  .rejilla, .tres-pasos { grid-template-columns: 1fr; }
+  .tarjeta, .tarjeta + .tarjeta, .tres-pasos li, .tres-pasos li + li { padding: 24px 0; border-left: 0; border-bottom: 1px solid var(--borde); }
+}
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .chips { column-count: 1; }
+  .pin { width: 24px; height: 24px; font-size: 0.85rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .oculto-al-inicio { opacity: 1; transform: none; }
+}
