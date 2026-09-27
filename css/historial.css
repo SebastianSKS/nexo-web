@@ -8,9 +8,6 @@
 .historial ul li { position: relative; padding-left: 24px; color: var(--suave); }
 .historial ul li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 12px; height: 2px; background: var(--ambar); }
 .historial ul strong { color: var(--texto); font-weight: 600; }
-.historial > li:first-child .version::after { content: "actual"; margin-left: 12px; padding: 3px 8px; border-radius: 2px; vertical-align: 0.6em; background: var(--ambar); color: #16181d; font-family: var(--fuente); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-:root[lang="en"] .historial > li:first-child .version::after { content: "current"; }
-
 @media (max-width: 700px) {
   .historial > li { grid-template-columns: 1fr; }
 }
