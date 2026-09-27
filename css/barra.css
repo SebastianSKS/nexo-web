@@ -1,0 +1,32 @@
+/* Barra superior y botones. Sobria: fondo del papel, filete abajo, sin cristal ni brillos. */
+
+.barra { position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--alto-barra); background: var(--fondo); border-bottom: 1px solid var(--borde); }
+.barra-in { height: 100%; display: flex; align-items: center; gap: 28px; }
+.marca { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--serif); font-weight: 650; font-size: 1.35rem; letter-spacing: -0.02em; }
+.marca img { border-radius: 7px; }
+.enlaces { display: flex; gap: 2px; margin-left: 12px; }
+.enlaces a { position: relative; text-decoration: none; color: var(--suave); padding: 8px 12px; font-size: 0.95rem; }
+.enlaces a::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 2px; height: 2px; background: var(--ambar); transform: scaleX(0); transform-origin: left; transition: transform 0.25s ease; }
+.enlaces a:hover { color: var(--texto); }
+.enlaces a:hover::after, .enlaces a[aria-current="true"]::after { transform: scaleX(1); }
+.enlaces a[aria-current="true"] { color: var(--texto); }
+.acciones { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.icono-btn { display: inline-grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--borde); border-radius: var(--radio); background: transparent; color: var(--texto); font: inherit; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+.icono-btn:hover { border-color: var(--texto); background: var(--capa); }
+
+.boton { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font: inherit; font-weight: 600; text-decoration: none; border-radius: var(--radio); padding: 10px 18px; border: 1px solid transparent; cursor: pointer; transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.18s; }
+.boton.grande { padding: 15px 26px; font-size: 1.02rem; }
+.boton.chico { padding: 8px 14px; font-size: 0.9rem; }
+.boton.primario { background: var(--texto); color: var(--fondo); }
+.boton.primario:hover { background: var(--acento); color: var(--acento-texto); transform: translateY(-1px); }
+.boton.secundario { border-color: var(--borde-fuerte); color: var(--texto); }
+.boton.secundario:hover { border-color: var(--texto); background: var(--capa); }
+
+@media (max-width: 960px) {
+  .enlaces { display: none; }
+}
+@media (max-width: 560px) {
+  .enlace-descarga.chico span { display: none; }
+  .enlace-descarga.chico { padding: 0; width: 38px; height: 38px; }
+  #btn-presentar { display: none; }
+}
