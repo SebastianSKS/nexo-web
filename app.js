@@ -258,6 +258,7 @@
         entradas.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("visto"); obs.unobserve(en.target); } });
       }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
       $$(".tarjeta, .ventana, .tres-pasos li, .chips li, .faq details, .encabezado").forEach(function (el) {
+        if (el.closest(".panel")) return; // las pantallas del recorrido ya se animan al cambiar de pestaña
         var r = el.getBoundingClientRect();
         if (r.top < window.innerHeight * 0.92 && r.bottom > 0) return; // lo que ya se ve no se anima
         el.classList.add("oculto-al-inicio");
