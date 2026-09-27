@@ -325,6 +325,23 @@
       if (navigator.clipboard) navigator.clipboard.writeText(datos.url).then(listo).catch(function () {});
     });
 
+    // Video de la portada: se pausa cuando no se ve (ahorra batería) y no arranca solo si la persona pidió menos movimiento.
+    var video = $(".hero-video");
+    if (video) {
+      if (sinMovimiento) { video.removeAttribute("autoplay"); video.pause(); }
+      else if ("IntersectionObserver" in window) {
+        var porPersona = false, porNosotros = false;
+        video.addEventListener("pause", function () { if (porNosotros) porNosotros = false; else if (!video.ended) porPersona = true; });
+        video.addEventListener("play", function () { porPersona = false; });
+        new IntersectionObserver(function (entradas) {
+          entradas.forEach(function (en) {
+            if (en.isIntersecting) { if (!porPersona && video.paused) video.play().catch(function () {}); }
+            else if (!video.paused) { porNosotros = true; video.pause(); }
+          });
+        }, { threshold: 0.25 }).observe(video);
+      }
+    }
+
     pintarVersion();
     pintarFechas();
     leerVersion();
