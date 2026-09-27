@@ -25,10 +25,31 @@ jobs:
       - uses: actions/checkout@v4
       - name: Comprobar
         run: node tools/comprobar.mjs
+      # La demo es la propia aplicación (repositorio nexushub) compilada en modo demo y servida desde /demo:
+      # datos de ejemplo, sin instalar nada. Se compila aquí para que siempre sea la última versión.
+      - name: Descargar la aplicación
+        uses: actions/checkout@v4
+        with:
+          repository: SebastianSKS/nexushub
+          path: app
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: Compilar la demo
+        working-directory: app
+        env:
+          NEXT_PUBLIC_DEMO: "1"
+          NEXT_PUBLIC_BASE_PATH: /nexo-web/demo
+        run: |
+          npm ci
+          npm run build
       - name: Dejar solo lo que se publica
         run: |
           mkdir -p _sitio
           cp -r index.html 404.html css app.js robots.txt sitemap.xml site.webmanifest .nojekyll assets _sitio/
+          cp -r app/out _sitio/demo
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
