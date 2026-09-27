@@ -61,6 +61,6 @@ Revisa que las imágenes y los enlaces internos existan, que toda imagen tenga t
 
 ## Publicarla
 
-Es un sitio estático: sirve en cualquier lado. Con **GitHub Pages**: *Settings › Pages › Source: GitHub Actions* y luego *Actions › Publicar la página › Run workflow* (ver `.github/workflows/pagina.yml`; ahí mismo se explica cómo hacer que se publique sola en cada cambio). También vale arrastrar la carpeta a Netlify o subirla a Vercel.
+Está en línea en **<https://sebastiansks.github.io/nexo-web/>** (GitHub Pages). Cada cambio en `main` se publica solo, después de pasar la comprobación (`.github/workflows/pagina.yml`); también se puede lanzar a mano desde *Actions › Publicar la página › Run workflow*.
 
-Antes de publicarla con un dominio propio, pon la dirección completa en `og:image` (`index.html`) para que se vea la tarjeta al compartir el enlace.
+Es un sitio estático: sirve en cualquier lado. Si algún día lo pasas a otro servidor o a un dominio propio (Netlify, Vercel…), cambia las direcciones de `og:url`, `og:image` y `canonical` en `index.html`.
