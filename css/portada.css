@@ -15,9 +15,9 @@ main .slide:nth-of-type(even) { background: var(--fondo-alt); }
 .cta-fila { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 .cta-fila.centrado { justify-content: center; }
 
-.confianza { list-style: none; padding: 0; margin: 30px 0 0; display: flex; flex-wrap: wrap; gap: 4px 0; color: var(--suave); font-size: 0.93rem; }
+.confianza { list-style: none; padding: 0; margin: 30px 0 0; display: flex; flex-wrap: wrap; gap: 6px 24px; color: var(--suave); font-size: 0.93rem; }
 .confianza li { display: inline-flex; align-items: center; }
-.confianza li + li::before { content: "/"; margin: 0 14px; color: var(--borde-fuerte); }
+.confianza li::before { content: ""; width: 5px; height: 5px; margin-right: 10px; border-radius: 50%; background: var(--ambar); }
 .confianza .ic { display: none; }
 
 /* La captura va sobre una hoja de color desplazada, como una lámina impresa */
