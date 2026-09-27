@@ -69,7 +69,8 @@ else {
 // 6. El JavaScript es válido y no queda nada de trabajo a medias.
 const sintaxis = spawnSync(process.execPath, ["--check", path.join(raiz, "app.js")], { encoding: "utf8" });
 if (sintaxis.status !== 0) falla(`app.js no es válido: ${sintaxis.stderr.trim()}`);
-for (const f of ["index.html", "styles.css", "app.js"]) if (/\b(TODO|FIXME|XXX)\b/.test(leer(f))) falla(`${f} tiene un TODO/FIXME pendiente`);
+const css = fs.readdirSync(path.join(raiz, "css")).filter((f) => f.endsWith(".css")).map((f) => "css/" + f);
+for (const f of ["index.html", "app.js", ...css]) if (/\b(TODO|FIXME|XXX)\b/.test(leer(f))) falla(`${f} tiene un TODO/FIXME pendiente`);
 
 if (fallos.length) {
   console.error(`✗ ${fallos.length} problema(s):\n` + fallos.map((f) => "  - " + f).join("\n"));
