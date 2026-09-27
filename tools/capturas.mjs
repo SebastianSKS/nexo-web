@@ -9,8 +9,8 @@ import { fileURLToPath } from "node:url";
 
 const SALIDA = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "assets", "capturas");
 fs.mkdirSync(SALIDA, { recursive: true });
-const PERFIL = path.join(process.env.TEMP, "nexo-web-perfil");
-fs.rmSync(PERFIL, { recursive: true, force: true });
+// Un perfil nuevo en cada ejecución: si el anterior sigue abierto en un Edge que no terminó, no estorba.
+const PERFIL = path.join(process.env.TEMP ?? "/tmp", `nexo-web-perfil-${Date.now()}`);
 
 const edge = spawn(process.env.EDGE ?? "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", [
   "--headless=new", "--remote-debugging-port=9445", `--user-data-dir=${PERFIL}`, "--window-size=1280,800",
