@@ -51,7 +51,7 @@
   function aplicarTema(t) {
     doc.setAttribute("data-theme", t);
     var m = $('meta[name="theme-color"]');
-    if (m) m.setAttribute("content", t === "dark" ? "#0e1116" : "#f6f8fb");
+    if (m) m.setAttribute("content", t === "dark" ? "#070b14" : "#ffffff");
     guardar("nexo-web-tema", t);
   }
   function aplicarAcento(c) {

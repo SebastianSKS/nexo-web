@@ -2,7 +2,9 @@
 
 :root {
   --acento: #3b8cff;
+  --acento-2: #7c5cff;
   --acento-texto: #fff;
+  --degradado: linear-gradient(135deg, var(--acento), var(--acento-2));
   --radio: 14px;
   --fuente: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   --fuente-titulo: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
@@ -10,24 +12,24 @@
 }
 
 :root[data-theme="dark"] {
-  --fondo: #0e1116;
-  --fondo-alt: #12161d;
-  --capa: #171c24;
-  --capa-2: #1e2530;
-  --borde: #262e3a;
-  --texto: #e8eef5;
-  --suave: #a3afbd;
+  --fondo: #070b14;
+  --fondo-alt: #0b1120;
+  --capa: #0f1626;
+  --capa-2: #172036;
+  --borde: #1e2a42;
+  --texto: #eef3fb;
+  --suave: #9fb0c8;
   --sombra: 0 24px 60px -20px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.05);
   color-scheme: dark;
 }
 :root[data-theme="light"] {
-  --fondo: #f6f8fb;
-  --fondo-alt: #eef2f7;
+  --fondo: #ffffff;
+  --fondo-alt: #f4f7fc;
   --capa: #ffffff;
-  --capa-2: #f1f4f9;
-  --borde: #dfe5ee;
-  --texto: #131a24;
-  --suave: #566273;
+  --capa-2: #eef3fb;
+  --borde: #dce4f0;
+  --texto: #0b1424;
+  --suave: #55657d;
   --sombra: 0 24px 60px -24px rgba(24, 40, 72, 0.35), 0 0 0 1px rgba(20, 30, 50, 0.08);
   color-scheme: light;
 }
