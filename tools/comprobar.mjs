@@ -57,6 +57,15 @@ for (const [, id, resto] of secciones) {
   if (!/data-notas-en="[^"]+"/.test(resto)) falla(`La sección #${id} no tiene notas en inglés`);
 }
 
+// 5b. Las direcciones públicas coinciden en todos lados (canónica, og:url, sitemap y robots).
+const canonica = /<link rel="canonical" href="([^"]+)"/.exec(html)?.[1];
+if (!canonica) falla("Falta <link rel=\"canonical\">");
+else {
+  if (!html.includes(`property="og:url" content="${canonica}"`)) falla("og:url no coincide con la dirección canónica");
+  if (!leer("sitemap.xml").includes(`<loc>${canonica}</loc>`)) falla("sitemap.xml no tiene la dirección canónica");
+  if (!leer("robots.txt").includes(`Sitemap: ${canonica}sitemap.xml`)) falla("robots.txt no apunta al sitemap");
+}
+
 // 6. El JavaScript es válido y no queda nada de trabajo a medias.
 const sintaxis = spawnSync(process.execPath, ["--check", path.join(raiz, "app.js")], { encoding: "utf8" });
 if (sintaxis.status !== 0) falla(`app.js no es válido: ${sintaxis.stderr.trim()}`);
