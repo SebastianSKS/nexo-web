@@ -18,8 +18,8 @@
   var ATRIBUTOS = { enAlt: "alt", enTitle: "title", enAriaLabel: "aria-label", enHref: "href", enContent: "content" };
   var idioma = "es";
   var textos = {
-    es: { nuevo: "Novedad de la {v}", proxima: "Próxima versión · {v}", version: "Versión {v}", sinVersion: "Descarga para Windows" },
-    en: { nuevo: "New in {v}", proxima: "Next version · {v}", version: "Version {v}", sinVersion: "Download for Windows" },
+    es: { nuevo: "Novedad de la {v}", proxima: "Próxima versión · {v}", version: "Versión {v}", proxima2: "Próximamente", sinVersion: "Descarga para Windows" },
+    en: { nuevo: "New in {v}", proxima: "Next version · {v}", version: "Version {v}", proxima2: "Coming soon", sinVersion: "Download for Windows" },
   };
 
   function aplicarIdioma(l) {
@@ -43,6 +43,7 @@
     var btn = $("#btn-idioma .txt-idioma");
     if (btn) btn.textContent = l === "en" ? "ES" : "EN";
     pintarVersion();
+    pintarFechas();
     pintarNotas();
     guardar("nexo-web-idioma", l);
   }
@@ -51,7 +52,7 @@
   function aplicarTema(t) {
     doc.setAttribute("data-theme", t);
     var m = $('meta[name="theme-color"]');
-    if (m) m.setAttribute("content", t === "dark" ? "#070b14" : "#ffffff");
+    if (m) m.setAttribute("content", t === "dark" ? "#101215" : "#f5f2ea");
     guardar("nexo-web-tema", t);
   }
   function aplicarAcento(c) {
@@ -61,7 +62,7 @@
   }
 
   /* ---------- Versión publicada (se lee de GitHub; si falla, todo sigue funcionando con el enlace general) ---------- */
-  var versionPublicada = null, tamanoMB = null;
+  var versionPublicada = null, tamanoMB = null, fechas = {};
   function comparar(a, b) {
     var x = a.split(".").map(Number), y = b.split(".").map(Number);
     for (var i = 0; i < 3; i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) - (y[i] || 0); }
@@ -81,6 +82,29 @@
       el.innerHTML = '<span class="insignia">' + txt + "</span>";
     });
   }
+  // La fecha de cada versión del historial sale de los releases de GitHub; la que aún no se publicó dice «Próximamente».
+  function pintarFechas() {
+    var t = textos[idioma], fmt;
+    try { fmt = new Intl.DateTimeFormat(idioma === "en" ? "en-US" : "es-MX", { year: "numeric", month: "long", day: "numeric" }); } catch (e) { fmt = null; }
+    $$("time[data-version]").forEach(function (el) {
+      var v = el.getAttribute("data-version"), f = fechas[v];
+      if (f && fmt) { el.textContent = fmt.format(new Date(f)); el.setAttribute("datetime", f.slice(0, 10)); }
+      else if (versionPublicada && comparar(v, versionPublicada) > 0) el.textContent = t.proxima2;
+      else el.textContent = "";
+    });
+  }
+  function leerFechas() {
+    fetch("https://api.github.com/repos/" + REPO + "/releases?per_page=30", { headers: { Accept: "application/vnd.github+json" } })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (lista) {
+        lista.forEach(function (r) {
+          var v = String(r.tag_name || "").replace(/^v/, "");
+          if (!r.draft && !r.prerelease && r.published_at) fechas[v] = r.published_at;
+        });
+        pintarFechas();
+      })
+      .catch(function () { /* sin red: las versiones se muestran sin fecha */ });
+  }
   function leerVersion() {
     if (!window.fetch) return;
     fetch("https://api.github.com/repos/" + REPO + "/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
@@ -95,6 +119,7 @@
           $$(".enlace-descarga").forEach(function (a) { a.href = instalador.browser_download_url; });
         }
         pintarVersion();
+        pintarFechas();
       })
       .catch(function () { /* sin red o límite de GitHub: se queda el enlace a «última versión» */ });
   }
@@ -297,7 +322,9 @@
     }
 
     pintarVersion();
+    pintarFechas();
     leerVersion();
+    leerFechas();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar);
