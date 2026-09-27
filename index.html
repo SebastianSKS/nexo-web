@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nexo · Tu carrera en un solo lugar</title>
 <meta name="description" content="Nexo es una app para Windows hecha para estudiantes: horario, calendario, tareas, documentos, música y video en un solo lugar. Sin cuenta y todo en tu equipo." data-en="Nexo is a Windows app made for students: schedule, calendar, tasks, documents, music and video in one place. No account, and everything stays on your computer.">
-<meta name="theme-color" content="#070b14">
+<meta name="theme-color" content="#f5f2ea">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nexo · Tu carrera en un solo lugar">
 <meta property="og:description" content="Horario, calendario, tareas, documentos, música y video en una app para Windows. Sin cuenta, todo en tu equipo.">
@@ -17,7 +17,13 @@
 <link rel="apple-touch-icon" href="assets/icono/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <link rel="preload" as="image" href="assets/capturas/inicio.webp" type="image/webp" fetchpriority="high" media="(min-width: 961px)">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/barra.css">
+<link rel="stylesheet" href="css/portada.css">
+<link rel="stylesheet" href="css/secciones.css">
+<link rel="stylesheet" href="css/historial.css">
+<link rel="stylesheet" href="css/cierre.css">
+<link rel="stylesheet" href="css/presentacion.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -39,7 +45,7 @@
   (function () {
     try {
       var t = localStorage.getItem("nexo-web-tema");
-      if (t !== "dark" && t !== "light") t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      if (t !== "dark" && t !== "light") t = "light";
       document.documentElement.setAttribute("data-theme", t);
       var a = localStorage.getItem("nexo-web-acento");
       if (a) document.documentElement.style.setProperty("--acento", a);
