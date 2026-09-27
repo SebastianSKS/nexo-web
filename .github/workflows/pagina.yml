@@ -1,8 +1,9 @@
 name: Publicar la página
 
-# Se lanza a mano (Actions › Publicar la página › Run workflow) una vez activado Settings › Pages › Source: GitHub Actions.
-# Para que se publique solo en cada cambio, añade «push: branches: [main]» bajo «on:».
+# Publica en GitHub Pages (Settings › Pages › Source: GitHub Actions) en cada cambio en main, o a mano desde Actions.
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
