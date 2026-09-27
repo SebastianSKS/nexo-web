@@ -72,7 +72,7 @@ kbd { font-family: inherit; font-size: 0.8em; padding: 0.12em 0.5em; border: 1px
 .marca img { border-radius: 8px; }
 .enlaces { display: flex; gap: 4px; margin-left: 8px; }
 .enlaces a { text-decoration: none; color: var(--suave); padding: 8px 12px; border-radius: 10px; font-size: 0.95rem; transition: background 0.15s, color 0.15s; }
-.enlaces a:hover { background: var(--capa-2); color: var(--texto); }
+.enlaces a:hover, .enlaces a[aria-current="true"] { background: var(--capa-2); color: var(--texto); }
 .acciones { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 .icono-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--borde); background: var(--capa); color: var(--texto); font: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: background 0.15s; }
 .icono-btn:hover { background: var(--capa-2); }
