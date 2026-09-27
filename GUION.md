@@ -10,7 +10,7 @@ Unos **6 a 8 minutos**. Abre la página, pulsa **P** y ve pasando con las flecha
 
 ## 1. Portada · 30 s
 
-> «Esto es Nexo: una app para Windows hecha para estudiantes. En vez de diez pestañas y apps sueltas, un solo lugar para el horario, el calendario, las tareas, los documentos, la música y el video. No pide cuenta y todo se queda en tu computadora.»
+> «Esto es Nexo: una app para Windows hecha para estudiantes. En vez de diez pestañas y apps sueltas, un solo lugar para el horario, el calendario, las tareas, los documentos, la música y el video. No pide cuenta, todo se queda en tu computadora y por el momento es gratis.»
 
 ## 2. Tu día · 45 s
 
@@ -67,6 +67,7 @@ Adelántate a lo que van a preguntar:
 - **¿Mac o celular?** Por ahora solo Windows 10 y 11.
 - **Windows me muestra un aviso al instalar.** Es normal en apps nuevas (SmartScreen): «Más información» y «Ejecutar de todos modos».
 - **¿Spotify?** Pide Premium para reproducir dentro de Nexo; además Spotify limita las apps nuevas a cuentas autorizadas a mano.
+- **¿Cuánto cuesta?** Por el momento es gratis. Lo único de pago es Spotify Premium, y eso es de Spotify.
 - **¿Y mis datos?** Se quedan en tu computadora; hay copia de seguridad para pasarlos a otra.
 
 ## 12. Cierre · 15 s
