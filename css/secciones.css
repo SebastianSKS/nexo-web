@@ -20,6 +20,8 @@ main .slide:not(.hero):not(.cierre) .etiqueta::before { content: counter(capitul
 .marcada img { border-radius: 4px; }
 .pin { position: absolute; left: var(--x); top: var(--y); width: 30px; height: 30px; display: grid; place-items: center; transform: translate(-50%, -50%); border-radius: 50%; background: var(--ambar); color: #16181d; font-family: var(--serif); font-weight: 700; font-size: 1rem; box-shadow: 0 0 0 4px color-mix(in srgb, var(--ambar) 30%, transparent), 0 6px 14px -4px rgba(0, 0, 0, 0.5); }
 
+h2 kbd { font-size: 0.5em; padding: 0.15em 0.55em; vertical-align: 0.28em; border-bottom-width: 3px; }
+
 /* Novedad de una versión */
 .nuevo { display: inline-block; }
 .nuevo:empty { display: none; }
