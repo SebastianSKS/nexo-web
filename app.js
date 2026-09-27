@@ -293,6 +293,7 @@
         });
       }, { rootMargin: "-45% 0px -50% 0px" });
       enlaces.forEach(function (a) { var s = $(a.getAttribute("href")); if (s) espia.observe(s); });
+      espia.observe($("#inicio")); // en la portada no hay ningún enlace marcado
     }
 
     pintarVersion();
