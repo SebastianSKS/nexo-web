@@ -1,0 +1,15 @@
+/* Apoya el proyecto: formas gratuitas de ayudar y metas concretas, sin tarjetas. */
+
+.ayuda a, .enlace-boton { color: var(--acento); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.ayuda a:hover, .enlace-boton:hover { text-decoration-thickness: 2px; }
+.enlace-boton { font: inherit; padding: 0; border: 0; background: none; cursor: pointer; }
+.aviso-apoyo { margin-top: 22px; padding-left: 14px; border-left: 3px solid var(--ambar); color: var(--suave); font-size: 0.95rem; max-width: 52ch; }
+.aviso-apoyo[hidden], #btn-apoyar[hidden] { display: none; }
+
+.subtitulo { font-size: 1.4rem; margin-bottom: 18px; }
+.metas { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--texto); }
+.metas li { padding: 20px 0; border-bottom: 1px solid var(--borde); }
+.metas li > div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.metas strong { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; letter-spacing: -0.01em; }
+.metas .estado { flex: none; padding: 2px 8px; border: 1px solid var(--borde-fuerte); border-radius: 2px; color: var(--suave); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.metas p { margin-top: 6px; color: var(--suave); font-size: 0.97rem; max-width: 50ch; }
