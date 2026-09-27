@@ -61,7 +61,7 @@
   }
 
   /* ---------- Versión publicada (se lee de GitHub; si falla, todo sigue funcionando con el enlace general) ---------- */
-  var versionPublicada = null;
+  var versionPublicada = null, tamanoMB = null;
   function comparar(a, b) {
     var x = a.split(".").map(Number), y = b.split(".").map(Number);
     for (var i = 0; i < 3; i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) - (y[i] || 0); }
@@ -69,7 +69,11 @@
   }
   function pintarVersion() {
     var t = textos[idioma];
-    $$(".ver-actual").forEach(function (el) { el.textContent = versionPublicada ? t.version.replace("{v}", versionPublicada) : (el.closest(".hero") ? "Nexo" : ""); });
+    $$(".ver-actual").forEach(function (el) {
+      var txt = versionPublicada ? t.version.replace("{v}", versionPublicada) : (el.closest(".hero") ? "Nexo" : "");
+      if (versionPublicada && tamanoMB && !el.closest(".hero")) txt += " · " + tamanoMB + " MB";
+      el.textContent = txt;
+    });
     $$(".nuevo").forEach(function (el) {
       var v = el.getAttribute("data-nuevo");
       var salio = versionPublicada && comparar(versionPublicada, v) >= 0;
@@ -86,6 +90,7 @@
         if (!/^\d+\.\d+\.\d+$/.test(v)) return;
         versionPublicada = v;
         var instalador = (d.assets || []).filter(function (a) { return /-setup\.exe$/.test(a.name); })[0];
+        if (instalador && instalador.size) tamanoMB = Math.round(instalador.size / 1048576);
         if (instalador && /^https:\/\/github\.com\//.test(instalador.browser_download_url)) {
           $$(".enlace-descarga").forEach(function (a) { a.href = instalador.browser_download_url; });
         }
