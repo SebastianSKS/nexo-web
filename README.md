@@ -1,5 +1,8 @@
 # Nexo · página de presentación
 
+[![Comprobar](https://github.com/SebastianSKS/nexo-web/actions/workflows/comprobar.yml/badge.svg)](https://github.com/SebastianSKS/nexo-web/actions/workflows/comprobar.yml)
+[![Página en línea](https://img.shields.io/badge/p%C3%A1gina-en%20l%C3%ADnea-3b8cff)](https://sebastiansks.github.io/nexo-web/)
+
 La página web de [Nexo](https://github.com/SebastianSKS/nexushub), la aplicación de escritorio para estudiantes. Sirve para **presentarla y explicarla**: se ve como una página de producto y también se puede **proyectar como una presentación**.
 
 Es un sitio estático, sin dependencias ni pasos de compilación: HTML, CSS y un poco de JavaScript.
