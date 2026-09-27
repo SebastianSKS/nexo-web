@@ -149,6 +149,10 @@ kbd { font-family: inherit; font-size: 0.8em; padding: 0.12em 0.5em; border: 1px
 
 /* Rejilla de funciones */
 .rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 16px; }
+.rejilla.bento { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-flow: dense; }
+.tarjeta.ancha { grid-column: span 2; background: radial-gradient(420px 220px at 100% 0%, color-mix(in srgb, var(--acento) 16%, transparent), transparent 70%), linear-gradient(180deg, var(--capa), color-mix(in srgb, var(--capa) 70%, var(--fondo))); }
+.tarjeta.ancha h3 { font-size: 1.35rem; }
+.tarjeta.ancha p { font-size: 1.02rem; max-width: 46ch; }
 .rejilla.tres-col { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .tarjeta { position: relative; background: linear-gradient(180deg, color-mix(in srgb, var(--capa) 100%, transparent), color-mix(in srgb, var(--capa) 70%, var(--fondo))); border: 1px solid var(--borde); border-radius: 18px; padding: 26px; transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s; }
 .tarjeta:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--acento) 55%, var(--borde)); box-shadow: 0 22px 50px -26px color-mix(in srgb, var(--acento) 70%, transparent); }
@@ -242,6 +246,7 @@ html.presentacion::-webkit-scrollbar { display: none; }
 .notas[hidden] { display: none; }
 
 @media (max-width: 960px) {
+  .rejilla.bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .metricas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .metricas li:nth-child(3) { border-left: 0; }
   .metricas li:nth-child(n+3) { border-top: 1px solid var(--borde); }
@@ -253,6 +258,8 @@ html.presentacion::-webkit-scrollbar { display: none; }
   .pie .pie-nota { margin-left: 0; }
 }
 @media (max-width: 560px) {
+  .rejilla.bento { grid-template-columns: 1fr; }
+  .tarjeta.ancha { grid-column: auto; }
   body { font-size: 16px; }
   .enlace-descarga.chico span { display: none; }
   .enlace-descarga.chico { padding: 0; width: 40px; height: 40px; }
