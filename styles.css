@@ -244,3 +244,12 @@ html.presentacion::-webkit-scrollbar { display: none; }
   .barra, .hud { display: none; }
   .oculto-al-inicio { opacity: 1; transform: none; }
 }
+
+@media print {
+  .slide { padding: 24px 0; break-inside: avoid; }
+  .slide:nth-of-type(even), .hero, .cierre { background: none !important; }
+  .ventana { box-shadow: none; border: 1px solid #ccc; }
+  .img-oscuro { display: none !important; }
+  .img-claro { display: block !important; }
+  .faq details:not([open]) p { display: block; }
+}
