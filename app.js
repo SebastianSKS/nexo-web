@@ -43,6 +43,7 @@
     var btn = $("#btn-idioma .txt-idioma");
     if (btn) btn.textContent = l === "en" ? "ES" : "EN";
     pintarVersion();
+    pintarNotas();
     guardar("nexo-web-idioma", l);
   }
 
@@ -121,9 +122,22 @@
     i = Math.max(0, Math.min(s.length - 1, i));
     s[i].scrollIntoView({ behavior: "smooth", block: "start" });
   }
+  function pintarNotas() {
+    var caja = $("#notas");
+    if (!caja || caja.hidden) return;
+    var s = diapositivas()[indiceActual()];
+    caja.textContent = (idioma === "en" ? s.getAttribute("data-notas-en") : s.getAttribute("data-notas")) || "";
+  }
+  function alternarNotas() {
+    var caja = $("#notas"), on = caja.hidden;
+    caja.hidden = !on;
+    $("#hud-notas").setAttribute("aria-pressed", String(on));
+    pintarNotas();
+  }
   function pintarContador() {
     var hud = $("#hud-num");
     if (hud) hud.textContent = indiceActual() + 1 + " / " + diapositivas().length;
+    pintarNotas();
   }
   // En presentación cada sección debe caber en la pantalla: si su contenido es más alto, se reduce lo justo.
   function ajustarAlto() {
@@ -153,6 +167,8 @@
     doc.classList.remove("presentacion");
     ajustarAlto();
     $("#hud").hidden = true;
+    $("#notas").hidden = true;
+    $("#hud-notas").setAttribute("aria-pressed", "false");
     try { if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {}); } catch (e) { /* ya no estaba en pantalla completa */ }
     requestAnimationFrame(function () { diapositivas()[actual].scrollIntoView({ block: "start" }); });
   }
@@ -164,6 +180,7 @@
     if (k === "p" || k === "P") { e.preventDefault(); presentando ? salirPresentacion() : entrarPresentacion(); return; }
     if (!presentando) return;
     if (k === "Escape") { e.preventDefault(); salirPresentacion(); return; }
+    if (k === "n" || k === "N") { e.preventDefault(); alternarNotas(); return; }
     if (/^[1-6]$/.test(k)) {
       var tabs = $$(".pestanas [role=tab]");
       if (tabs[Number(k) - 1]) { elegirPestana(tabs[Number(k) - 1].dataset.tab); irA(diapositivas().indexOf($("#recorrido"))); }
@@ -194,6 +211,7 @@
     $("#btn-tema").addEventListener("click", function () { aplicarTema(doc.getAttribute("data-theme") === "dark" ? "light" : "dark"); });
     $("#btn-presentar").addEventListener("click", entrarPresentacion);
     $("#hud-salir").addEventListener("click", salirPresentacion);
+    $("#hud-notas").addEventListener("click", alternarNotas);
     document.addEventListener("keydown", alPulsarTecla);
     window.addEventListener("resize", function () { if (presentando) ajustarAlto(); });
     document.addEventListener("fullscreenchange", function () { if (!document.fullscreenElement && presentando) salirPresentacion(); });
