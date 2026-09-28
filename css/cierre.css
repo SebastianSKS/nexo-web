@@ -12,7 +12,8 @@
 .pie-nota { color: var(--suave); font-size: 0.9rem; margin-top: 20px; }
 .panel-cta .pie-nota { color: color-mix(in srgb, var(--fondo) 60%, transparent); }
 
-.pie { border-top: 1px solid var(--borde); padding: 64px 0 28px; background: var(--fondo-alt); }
+.pie { position: relative; border-top: 1px solid var(--borde); padding: 64px 0 28px; background: var(--fondo-alt); }
+.pie::before { content: ""; position: absolute; top: -1px; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--acento), var(--ambar)); }
 .pie-cols { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 36px 40px; }
 .pie-marca p { color: var(--suave); font-size: 0.95rem; margin-top: 14px; max-width: 36ch; }
 .pie nav { display: grid; gap: 10px; align-content: start; }
