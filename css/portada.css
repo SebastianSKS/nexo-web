@@ -3,14 +3,27 @@
 .slide { padding: clamp(72px, 9vw, 128px) 0; }
 main .slide:nth-of-type(even) { background: var(--fondo-alt); }
 
-.hero { padding-top: calc(var(--alto-barra) + clamp(40px, 6vw, 84px)); padding-bottom: clamp(48px, 6vw, 88px); background: var(--fondo); }
+.hero { position: relative; padding-top: calc(var(--alto-barra) + clamp(40px, 6vw, 84px)); padding-bottom: clamp(48px, 6vw, 88px); background: var(--fondo); overflow: clip; }
+/* Trama de puntos, muy discreta: textura de papel impreso, no un resplandor. Vive detrás del contenido y se desvanece hacia abajo. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--borde-fuerte) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%);
+}
+.hero > .contenedor { position: relative; }
 .hero-in { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
 .hero h1 { font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 600; line-height: 1.02; letter-spacing: -0.03em; }
 .hero .lead { font-size: clamp(1.1rem, 1.6vw, 1.28rem); }
 
 .etiqueta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--suave); }
 .etiqueta::before { content: ""; width: 26px; height: 2px; background: var(--ambar); flex: none; }
-.hero .etiqueta::before { content: none; }
+.hero .etiqueta { display: inline-flex; padding: 6px 14px 6px 10px; border-radius: 999px; background: var(--texto); color: var(--fondo); }
+.hero .etiqueta::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ambar); }
 
 .cta-fila { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 .cta-fila.centrado { justify-content: center; }
