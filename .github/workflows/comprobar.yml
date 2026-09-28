@@ -5,12 +5,17 @@ on:
     branches: [main]
   pull_request:
 
+# Sin esto, el token de este flujo hereda los permisos por defecto del repositorio (a veces de escritura).
+# Este flujo solo lee el código y ejecuta la comprobación: no necesita escribir nada.
+permissions:
+  contents: read
+
 jobs:
   comprobar:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
       - run: node tools/comprobar.mjs
