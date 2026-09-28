@@ -87,6 +87,9 @@ kbd { font-family: var(--mono); font-size: 0.78em; padding: 0.1em 0.5em; border:
 :focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; border-radius: 3px; }
 ::selection { background: var(--ambar); color: #16181d; }
 
+/* El SVG con los símbolos de los íconos no se ve: solo lo referencian los <use> de la página (antes iba con style="" en línea). */
+.sprite-oculto { position: absolute; }
+
 .ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 :root[data-theme="dark"] .ic-luna, :root[data-theme="light"] .ic-sol { display: none; }
 :root[data-theme="dark"] .img-claro, :root[data-theme="light"] .img-oscuro { display: none; }
