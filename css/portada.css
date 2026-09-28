@@ -42,12 +42,12 @@ main .slide:nth-of-type(even) { background: var(--fondo-alt); }
 .hero-video { aspect-ratio: 8 / 5; background: var(--capa); }
 .flota { display: none; }
 
-/* Franja de datos: un bloque de color sólido (la misma tinta del botón), no una fila de texto suelta. */
-.metricas { list-style: none; margin: clamp(56px, 7vw, 96px) 0 0; padding: clamp(20px, 3vw, 32px) clamp(20px, 3vw, 36px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-radius: 4px; background: var(--texto); color: var(--fondo); }
+/* Franja de datos: un bloque de tinta siempre oscuro (no sigue el tema: en oscuro, var(--texto) se habría vuelto claro y deslumbraría). */
+.metricas { list-style: none; margin: clamp(56px, 7vw, 96px) 0 0; padding: clamp(20px, 3vw, 32px) clamp(20px, 3vw, 36px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-radius: 4px; background: var(--tinta); color: var(--sobre-tinta); }
 .metricas li { padding: 6px 20px 6px 0; display: grid; gap: 6px; }
-.metricas li + li { padding-left: 20px; border-left: 1px solid color-mix(in srgb, var(--fondo) 22%, transparent); }
+.metricas li + li { padding-left: 20px; border-left: 1px solid color-mix(in srgb, var(--sobre-tinta) 22%, transparent); }
 .metricas strong { font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.2rem); line-height: 1; font-weight: 500; letter-spacing: -0.03em; font-feature-settings: "lnum"; color: var(--ambar); }
-.metricas span { color: color-mix(in srgb, var(--fondo) 72%, transparent); font-size: 0.93rem; line-height: 1.4; max-width: 24ch; }
+.metricas span { color: color-mix(in srgb, var(--sobre-tinta) 72%, transparent); font-size: 0.93rem; line-height: 1.4; max-width: 24ch; }
 
 @media (max-width: 960px) {
   .hero-in { grid-template-columns: 1fr; }
@@ -56,7 +56,7 @@ main .slide:nth-of-type(even) { background: var(--fondo-alt); }
   .hero-visual::after { display: none; }
   .metricas { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 20px; }
   .metricas li:nth-child(3) { padding-left: 0; border-left: 0; }
-  .metricas li:nth-child(n+3) { border-top: 1px solid color-mix(in srgb, var(--fondo) 22%, transparent); padding-top: 20px; }
+  .metricas li:nth-child(n+3) { border-top: 1px solid color-mix(in srgb, var(--sobre-tinta) 22%, transparent); padding-top: 20px; }
 }
 @media (max-width: 560px) {
   .cta-fila .boton.grande { width: 100%; }
