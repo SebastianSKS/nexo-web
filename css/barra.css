@@ -18,9 +18,11 @@
 .boton.grande { padding: 15px 26px; font-size: 1.02rem; }
 .boton.chico { padding: 8px 14px; font-size: 0.9rem; }
 .boton.primario { background: var(--texto); color: var(--fondo); }
-.boton.primario:hover { background: var(--acento); color: var(--acento-texto); transform: translateY(-1px); }
+.boton.primario:hover { background: var(--acento); color: var(--acento-texto); transform: translateY(-1px); box-shadow: 0 10px 22px -10px var(--acento); }
 .boton.secundario { border-color: var(--borde-fuerte); color: var(--texto); }
 .boton.secundario:hover { border-color: var(--texto); background: var(--capa); }
+.boton .ic { transition: transform 0.2s; }
+.boton.primario:hover .ic { transform: translateY(2px); }
 
 @media (max-width: 960px) {
   .enlaces { display: none; }
