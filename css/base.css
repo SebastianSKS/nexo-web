@@ -23,6 +23,10 @@
   --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
   --alto-barra: 68px;
   --radio: 6px;
+  /* Para los bloques de «tinta» (la franja de cifras, el cierre): siempre oscuros, en los dos temas. Si usaran
+     var(--texto) se volverían claros en el tema oscuro y quedaría un bloque blanco deslumbrante. */
+  --tinta: #16181d;
+  --sobre-tinta: #f2efe7;
 }
 
 :root[data-theme="light"] {
