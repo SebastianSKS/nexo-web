@@ -78,7 +78,14 @@ python tools/a-webp.py
 node tools/comprobar.mjs
 ```
 
-Revisa que las imágenes y los enlaces internos existan, que toda imagen tenga texto alternativo y que todo lo que tiene versión en español tenga también la inglesa.
+Revisa que las imágenes y los enlaces internos existan, que toda imagen tenga texto alternativo, que todo lo que tiene versión en español tenga también la inglesa, y lo de seguridad del siguiente punto.
+
+## Seguridad
+
+- **Sin dependencias externas en tiempo de ejecución.** Todo el CSS, el JavaScript y las fuentes están en este repositorio; lo único que se consulta fuera es la API de GitHub (para la versión y el enlace de descarga). Sin CDN, sin analítica, sin rastreo.
+- **Política de seguridad de contenido (CSP)** en `index.html` y `404.html`, por `<meta>` (GitHub Pages no deja poner cabeceras propias): nada de scripts ni estilos en línea, nada de marcos, ninguna conexión que no sea al propio sitio o a `api.github.com`. `tools/comprobar.mjs` revisa que se mantenga así — que no vuelva un `style=""`, un `onclick=""` o un `<script>` suelto, y que el hash del JSON-LD coincida con lo que declara la política.
+- **Límite conocido:** por venir en un `<meta>` y no en una cabecera HTTP, la política no puede traer `frame-ancestors` (protección contra que otra página incruste esta en un `<iframe>`) ni cabeceras como `X-Content-Type-Options`. GitHub Pages no permite configurar cabeceras propias; con un dominio propio en otro proveedor (Netlify, Cloudflare Pages…) sí se podrían añadir.
+- **Los flujos de GitHub Actions** (`.github/workflows/`) fijan cada *Action* de terceros a su commit exacto (no a una etiqueta como `v4`, que se puede mover) y piden solo los permisos que necesitan.
 
 ## Apoyo económico
 
