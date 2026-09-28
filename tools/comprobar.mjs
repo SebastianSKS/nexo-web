@@ -1,5 +1,6 @@
 // Comprueba el sitio sin instalar nada: archivos que existen, enlaces internos, textos alternativos, traducción al inglés
 // y notas de quien presenta. Uso: node tools/comprobar.mjs (termina con error si algo falla).
+import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -72,6 +73,28 @@ const sintaxis = spawnSync(process.execPath, ["--check", path.join(raiz, "app.js
 if (sintaxis.status !== 0) falla(`app.js no es válido: ${sintaxis.stderr.trim()}`);
 const css = fs.readdirSync(path.join(raiz, "css")).filter((f) => f.endsWith(".css")).map((f) => "css/" + f);
 for (const f of ["index.html", "app.js", ...css]) if (/\b(TODO|FIXME|XXX)\b/.test(leer(f))) falla(`${f} tiene un TODO/FIXME pendiente`);
+
+// 7. Seguridad: sin estilos ni manejadores de eventos en línea, con una política de seguridad de contenido estricta
+// (sin 'unsafe-inline' ni 'unsafe-eval'), y el hash del JSON-LD coincide con el que declara esa política — si alguien
+// cambia esos datos sin actualizar el hash, el navegador lo bloquearía en silencio; esto lo detecta antes.
+function revisarSeguridad(nombre, contenido) {
+  if (/\sstyle="/.test(contenido)) falla(`${nombre}: queda un atributo style en línea`);
+  if (/\son[a-z]+="/i.test(contenido)) falla(`${nombre}: queda un manejador de evento en línea (onclick, onload…)`);
+  const csp = /<meta http-equiv="Content-Security-Policy" content="([^"]+)"/.exec(contenido)?.[1];
+  if (!csp) { falla(`${nombre}: no tiene política de seguridad de contenido`); return; }
+  if (/unsafe-inline|unsafe-eval/.test(csp)) falla(`${nombre}: la política de seguridad permite código en línea ('unsafe-inline'/'unsafe-eval')`);
+  for (const m of contenido.matchAll(/<script(\s[^>]*)?>([\s\S]*?)<\/script>/g)) {
+    const [, atributos = "", cuerpo] = m;
+    if (/\ssrc=/.test(atributos)) continue; // script externo: cubierto por script-src 'self'
+    if (!cuerpo.trim()) continue; // <script src> sin cierre propio en el regex, o vacío
+    const esJsonLd = /type="application\/ld\+json"/.test(atributos);
+    if (!esJsonLd) { falla(`${nombre}: hay un <script> en línea que no es JSON-LD (rompe la política de seguridad)`); continue; }
+    const hash = "sha256-" + createHash("sha256").update(cuerpo).digest("base64");
+    if (!csp.includes(hash)) falla(`${nombre}: el JSON-LD no coincide con el hash de la política (${hash}); actualiza el meta CSP`);
+  }
+}
+revisarSeguridad("index.html", html);
+revisarSeguridad("404.html", leer("404.html"));
 
 if (fallos.length) {
   console.error(`✗ ${fallos.length} problema(s):\n` + fallos.map((f) => "  - " + f).join("\n"));
