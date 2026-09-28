@@ -5,7 +5,7 @@
 
 /* Numeración de capítulos: 01, 02… en cada sección menos la portada */
 main { counter-reset: capitulo; }
-main .slide:not(.hero):not(.cierre) { counter-increment: capitulo; }
+main .slide:not(.hero):not(.cierre):not(.declaracion) { counter-increment: capitulo; }
 main .slide:not(.hero):not(.cierre) .etiqueta::before { content: counter(capitulo, decimal-leading-zero); width: auto; height: auto; background: none; font-family: var(--serif); font-size: 1.05rem; font-weight: 500; letter-spacing: 0; color: var(--ambar); }
 
 .dos { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
@@ -109,6 +109,12 @@ main .slide:nth-of-type(even) .indice li:hover { background: var(--capa); }
 .tres-pasos .num { display: block; font-family: var(--serif); font-size: clamp(3.6rem, 6vw, 5rem); line-height: 1; font-weight: 400; font-style: italic; color: var(--ambar); }
 .tres-pasos h3 { margin: 14px 0 8px; font-size: 1.4rem; }
 .tres-pasos p { color: var(--suave); }
+
+/* Frase destacada: un respiro de color entre secciones, no una más de la lista (sin numerar, sin filetes). */
+.declaracion { background: var(--acento) !important; padding: clamp(72px, 11vw, 132px) 0; }
+.declaracion h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); color: var(--acento-texto); font-style: italic; font-weight: 500; }
+.declaracion h2 em { color: inherit; font-weight: 700; text-decoration: underline; text-decoration-color: var(--ambar); text-decoration-thickness: 3px; text-underline-offset: 6px; }
+.declaracion .lead { margin-inline: auto; color: color-mix(in srgb, var(--acento-texto) 78%, transparent); }
 
 /* Preguntas */
 .faq { border-top: 2px solid var(--texto); }
