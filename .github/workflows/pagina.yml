@@ -22,17 +22,17 @@ jobs:
       name: github-pages
       url: ${{ steps.despliegue.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Comprobar
         run: node tools/comprobar.mjs
       # La demo es la propia aplicación (repositorio nexushub) compilada en modo demo y servida desde /demo:
       # datos de ejemplo, sin instalar nada. Se compila aquí para que siempre sea la última versión.
       - name: Descargar la aplicación
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: SebastianSKS/nexushub
           path: app
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
@@ -50,9 +50,9 @@ jobs:
           mkdir -p _sitio
           cp -r index.html 404.html css app.js robots.txt sitemap.xml site.webmanifest .nojekyll assets _sitio/
           cp -r app/out _sitio/demo
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
           path: _sitio
       - id: despliegue
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
