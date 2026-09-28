@@ -48,7 +48,7 @@ jobs:
       - name: Dejar solo lo que se publica
         run: |
           mkdir -p _sitio
-          cp -r index.html 404.html css app.js robots.txt sitemap.xml site.webmanifest .nojekyll assets _sitio/
+          cp -r index.html 404.html css app.js tema-antes.js robots.txt sitemap.xml site.webmanifest .nojekyll assets _sitio/
           cp -r app/out _sitio/demo
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
