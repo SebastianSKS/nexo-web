@@ -31,4 +31,6 @@ html.presentacion::-webkit-scrollbar { display: none; }
   .img-claro { display: block !important; }
   .panel-cta { background: none; color: #000; border: 1px solid #000; }
   .panel-cta .lead { color: #333; }
+  .declaracion { background: none !important; border-top: 1px solid #000; border-bottom: 1px solid #000; }
+  .declaracion h2, .declaracion h2 em, .declaracion .lead { color: #000 !important; text-decoration-color: #000 !important; }
 }
