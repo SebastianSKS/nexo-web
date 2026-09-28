@@ -33,10 +33,27 @@ h2 kbd { font-size: 0.5em; padding: 0.15em 0.55em; vertical-align: 0.28em; borde
 .pasos-num li::before { content: counter(p); position: absolute; left: 0; top: -2px; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--ambar); color: #16181d; font-family: var(--serif); font-weight: 700; }
 .pasos-num strong { display: block; color: var(--texto); font-family: var(--serif); font-size: 1.2rem; font-weight: 600; letter-spacing: -0.01em; }
 
-/* Funciones: un índice, no una pared de tarjetas */
+/* Funciones: un índice, no una pared de tarjetas. Cada número va en una placa de color que se llena al pasar el ratón. */
 .indice { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(32px, 5vw, 80px); border-top: 2px solid var(--texto); counter-reset: fn; }
-.indice li { counter-increment: fn; display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 0 8px; padding: 24px 0; border-bottom: 1px solid var(--borde); }
-.indice li::before { content: counter(fn, decimal-leading-zero); font-family: var(--serif); font-size: 1.05rem; color: var(--ambar); padding-top: 3px; }
+.indice li { counter-increment: fn; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 0 14px; padding: 22px 10px 22px 0; margin: 0 -10px; border-bottom: 1px solid var(--borde); border-radius: 4px; transition: background 0.2s; }
+.indice li:hover { background: var(--fondo-alt); }
+main .slide:nth-of-type(even) .indice li:hover { background: var(--capa); }
+.indice li::before {
+  content: counter(fn, decimal-leading-zero);
+  align-self: start;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-family: var(--serif);
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--ambar);
+  border: 1.5px solid var(--ambar);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.indice li:hover::before { background: var(--ambar); color: #16181d; transform: scale(1.08); }
 .indice h3 { font-size: 1.32rem; font-weight: 600; letter-spacing: -0.01em; transition: color 0.2s; }
 .indice li:hover h3 { color: var(--acento); }
 .indice p { grid-column: 2; margin-top: 6px; color: var(--suave); font-size: 0.98rem; line-height: 1.55; max-width: 48ch; }
