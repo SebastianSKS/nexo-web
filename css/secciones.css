@@ -95,11 +95,13 @@ main .slide:nth-of-type(even) .indice li:hover { background: var(--capa); }
 .tres figure { margin: 0; }
 .tres figcaption { margin-top: 12px; color: var(--suave); font-family: var(--serif); font-style: italic; font-size: 1.05rem; }
 
-/* Privacidad: tres columnas separadas por filetes */
+/* Privacidad: tres columnas separadas por filetes; el ícono se llena de color al pasar el ratón */
 .rejilla { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--texto); }
-.tarjeta { padding: 30px 32px 8px 0; }
+.tarjeta { padding: 30px 32px 8px 0; transition: transform 0.2s; }
+.tarjeta:hover { transform: translateY(-3px); }
 .tarjeta + .tarjeta { padding-left: 32px; border-left: 1px solid var(--borde); }
-.tarjeta .ic.grande { width: 30px; height: 30px; color: var(--acento); }
+.tarjeta .ic.grande { width: 30px; height: 30px; padding: 9px; border-radius: 50%; box-sizing: content-box; color: var(--acento); background: color-mix(in srgb, var(--acento) 12%, transparent); transition: background 0.2s, color 0.2s; }
+.tarjeta:hover .ic.grande { background: var(--acento); color: var(--acento-texto); }
 .tarjeta h3 { font-size: 1.4rem; margin: 18px 0 10px; }
 .tarjeta p { color: var(--suave); font-size: 0.98rem; }
 
