@@ -65,10 +65,10 @@ main .slide:nth-of-type(even) .indice li:hover { background: var(--capa); }
 .demo-llamada p { margin-top: 4px; color: var(--suave); font-size: 0.97rem; max-width: 62ch; }
 .presentacion .demo-llamada { display: none; }
 
-.pestanas { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 28px; border-bottom: 1px solid var(--borde); }
-.pestanas button { font: inherit; font-weight: 600; font-size: 0.95rem; padding: 12px 20px; margin-bottom: -1px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: var(--suave); cursor: pointer; transition: color 0.15s, border-color 0.15s; }
-.pestanas button:hover { color: var(--texto); }
-.pestanas button[aria-selected="true"] { color: var(--texto); border-bottom-color: var(--ambar); }
+.pestanas { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.pestanas button { font: inherit; font-weight: 600; font-size: 0.95rem; padding: 10px 18px; border: 1.5px solid var(--borde-fuerte); border-radius: 999px; background: transparent; color: var(--texto); cursor: pointer; transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.18s; }
+.pestanas button:hover { border-color: var(--texto); transform: translateY(-1px); }
+.pestanas button[aria-selected="true"] { background: var(--texto); border-color: var(--texto); color: var(--fondo); }
 .panel { display: none; margin: 0; }
 .panel.activo { display: block; animation: aparece 0.35s ease; }
 .panel figcaption { margin-top: 18px; color: var(--suave); font-family: var(--serif); font-style: italic; font-size: 1.1rem; }
