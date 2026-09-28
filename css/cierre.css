@@ -1,16 +1,17 @@
 /* Cierre (bloque de tinta) y pie de página */
 
 .cierre { background: var(--fondo) !important; }
-.panel-cta { padding: clamp(44px, 6vw, 88px) clamp(20px, 5vw, 72px); background: var(--texto); color: var(--fondo); border-radius: 4px; }
-.panel-cta .lead { color: color-mix(in srgb, var(--fondo) 72%, transparent); margin-inline: auto; }
+/* Bloque de tinta invariable (no sigue el tema): con var(--texto) se habría vuelto un panel claro y deslumbrante en oscuro. */
+.panel-cta { padding: clamp(44px, 6vw, 88px) clamp(20px, 5vw, 72px); background: var(--tinta); color: var(--sobre-tinta); border-radius: 4px; }
+.panel-cta .lead { color: color-mix(in srgb, var(--sobre-tinta) 72%, transparent); margin-inline: auto; }
 .panel-cta h2 em { color: var(--ambar); }
 .panel-cta .boton.primario { background: var(--ambar); color: #16181d; }
-.panel-cta .boton.primario:hover { background: var(--fondo); color: var(--texto); }
-.panel-cta .boton.secundario { border-color: color-mix(in srgb, var(--fondo) 45%, transparent); color: var(--fondo); }
-.panel-cta .boton.secundario:hover { background: color-mix(in srgb, var(--fondo) 12%, transparent); border-color: var(--fondo); }
+.panel-cta .boton.primario:hover { background: var(--sobre-tinta); color: var(--tinta); }
+.panel-cta .boton.secundario { border-color: color-mix(in srgb, var(--sobre-tinta) 45%, transparent); color: var(--sobre-tinta); }
+.panel-cta .boton.secundario:hover { background: color-mix(in srgb, var(--sobre-tinta) 12%, transparent); border-color: var(--sobre-tinta); }
 .logo-grande { margin: 0 auto 24px; border-radius: 20px; }
 .pie-nota { color: var(--suave); font-size: 0.9rem; margin-top: 20px; }
-.panel-cta .pie-nota { color: color-mix(in srgb, var(--fondo) 60%, transparent); }
+.panel-cta .pie-nota { color: color-mix(in srgb, var(--sobre-tinta) 60%, transparent); }
 
 .pie { position: relative; border-top: 1px solid var(--borde); padding: 64px 0 28px; background: var(--fondo-alt); }
 .pie::before { content: ""; position: absolute; top: -1px; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--acento), var(--ambar)); }
