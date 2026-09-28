@@ -1,7 +1,10 @@
 /* Historial de versiones: una fila por versión, con el número en serif y lo que cambió a la derecha. */
 
 .historial { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--texto); }
-.historial > li { display: grid; grid-template-columns: minmax(150px, 0.28fr) minmax(0, 1fr); gap: 8px clamp(24px, 4vw, 64px); padding: 28px 0; border-bottom: 1px solid var(--borde); }
+.historial > li { display: grid; grid-template-columns: minmax(150px, 0.28fr) minmax(0, 1fr); gap: 8px clamp(24px, 4vw, 64px); padding: 28px 12px; margin: 0 -12px; border-radius: 4px; border-bottom: 1px solid var(--borde); transition: background 0.18s; }
+.historial > li:hover { background: var(--fondo-alt); }
+main .slide:nth-of-type(even) .historial > li:hover { background: var(--capa); }
+.historial > li:first-child .version { color: var(--acento); }
 .historial .version { font-family: var(--serif); font-size: clamp(2rem, 3.4vw, 2.8rem); line-height: 1; font-weight: 500; letter-spacing: -0.02em; }
 .historial .version small { display: block; margin-top: 8px; font-family: var(--fuente); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--suave); }
 .historial ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
