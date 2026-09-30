@@ -106,6 +106,12 @@
         if (instalador && /^https:\/\/github\.com\//.test(instalador.browser_download_url)) {
           $$(".enlace-descarga").forEach(function (a) { a.href = instalador.browser_download_url; });
         }
+        // El AppImage es el que basta con bajar y ejecutar (el .deb pide el navegador de archivos o apt): es el mejor
+        // enlace directo para "el .deb o el AppImage" del texto; quien prefiera el .deb ya está en la misma página de Releases.
+        var appimage = (d.assets || []).filter(function (a) { return /\.AppImage$/.test(a.name); })[0];
+        if (appimage && /^https:\/\/github\.com\//.test(appimage.browser_download_url)) {
+          $$(".enlace-descarga-linux").forEach(function (a) { a.href = appimage.browser_download_url; });
+        }
         pintarVersion();
         pintarFechas();
       })
