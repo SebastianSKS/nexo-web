@@ -28,9 +28,11 @@ main .slide:nth-of-type(even) { background: var(--fondo-alt); }
 .cta-fila { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 .cta-fila.centrado { justify-content: center; }
 
-.disponible-para { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; }
-.disponible-para.centrado { justify-content: center; }
-.disponible-etiqueta { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--suave); }
+.disponible-para { margin-top: 20px; }
+.disponible-etiqueta { margin: 0 0 9px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--suave); }
+.disponible-para.centrado { text-align: center; }
+.disponible-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.disponible-para.centrado .disponible-chips { justify-content: center; }
 .disponible-chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px 7px 10px; border-radius: 999px; background: var(--capa); border: 1px solid var(--borde); font-size: 0.92rem; font-weight: 600; color: var(--texto); }
 a.disponible-enlace { text-decoration: none; transition: border-color 0.2s, background 0.2s; }
 a.disponible-enlace:hover { border-color: var(--acento); background: color-mix(in srgb, var(--acento) 10%, var(--capa)); }
