@@ -91,7 +91,9 @@ kbd { font-family: var(--mono); font-size: 0.78em; padding: 0.1em 0.5em; border:
 .sprite-oculto { position: absolute; }
 
 .ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-.ic-chica { width: 13px; height: 13px; stroke-width: 2; vertical-align: -2px; }
+
+/* Logos de marca (Windows, Linux…): vienen como forma rellena, no como trazo. */
+.logo-ic { width: 20px; height: 20px; fill: currentColor; stroke: none; flex: none; }
 :root[data-theme="dark"] .ic-luna, :root[data-theme="light"] .ic-sol { display: none; }
 :root[data-theme="dark"] .img-claro, :root[data-theme="light"] .img-oscuro { display: none; }
 
