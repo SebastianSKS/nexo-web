@@ -69,10 +69,26 @@ else {
 }
 
 // 6. El JavaScript es válido y no queda nada de trabajo a medias.
-const sintaxis = spawnSync(process.execPath, ["--check", path.join(raiz, "app.js")], { encoding: "utf8" });
-if (sintaxis.status !== 0) falla(`app.js no es válido: ${sintaxis.stderr.trim()}`);
+for (const js of ["app.js", "basedatos.js", "exponer-bd.js"]) {
+  const sintaxis = spawnSync(process.execPath, ["--check", path.join(raiz, js)], { encoding: "utf8" });
+  if (sintaxis.status !== 0) falla(`${js} no es válido: ${sintaxis.stderr.trim()}`);
+}
 const css = fs.readdirSync(path.join(raiz, "css")).filter((f) => f.endsWith(".css")).map((f) => "css/" + f);
-for (const f of ["index.html", "app.js", ...css]) if (/\b(TODO|FIXME|XXX)\b/.test(leer(f))) falla(`${f} tiene un TODO/FIXME pendiente`);
+for (const f of ["index.html", "base-de-datos.html", "exponer-bd.html", "app.js", "basedatos.js", "exponer-bd.js", ...css]) if (/\b(TODO|FIXME|XXX)\b/.test(leer(f))) falla(`${f} tiene un TODO/FIXME pendiente`);
+
+// 6b. Las páginas de la base de datos (la completa y la de exposición): lo que referencian existe (el SQLite en
+// WebAssembly, la base y el SQL) y, en la de exposición, cada sección trae su nota para quien presenta.
+const bd = leer("base-de-datos.html");
+const expo = leer("exponer-bd.html");
+for (const [nombre, contenido] of [["base-de-datos.html", bd], ["exponer-bd.html", expo]]) {
+  for (const m of contenido.matchAll(/\s(?:src|href)="([^"]+)"/g)) {
+    if (/^(https?:|mailto:|#|data:|\.\/$)/.test(m[1])) continue;
+    if (!fs.existsSync(path.join(raiz, m[1].split("#")[0]))) falla(`${nombre}: no existe el archivo «${m[1]}»`);
+  }
+  for (const m of contenido.matchAll(/href="#([^"]+)"/g)) if (!new RegExp(`\\sid="${m[1]}"`).test(contenido)) falla(`${nombre}: el enlace #${m[1]} no lleva a ninguna sección`);
+}
+for (const [, id, resto] of expo.matchAll(/<section class="slide[^"]*" id="([^"]+)"([^>]*)>/g)) if (!/data-notas="[^"]+"/.test(resto)) falla(`exponer-bd.html: la sección #${id} no tiene notas`);
+for (const f of ["assets/db/nexo.db", "assets/db/nexo.sql", "assets/db/sql-wasm.wasm"]) if (!fs.existsSync(path.join(raiz, f))) falla(`Falta ${f}`);
 
 // 7. Seguridad: sin estilos ni manejadores de eventos en línea, con una política de seguridad de contenido estricta
 // (sin 'unsafe-inline' ni 'unsafe-eval'), y el hash del JSON-LD coincide con el que declara esa política — si alguien
@@ -82,7 +98,8 @@ function revisarSeguridad(nombre, contenido) {
   if (/\son[a-z]+="/i.test(contenido)) falla(`${nombre}: queda un manejador de evento en línea (onclick, onload…)`);
   const csp = /<meta http-equiv="Content-Security-Policy" content="([^"]+)"/.exec(contenido)?.[1];
   if (!csp) { falla(`${nombre}: no tiene política de seguridad de contenido`); return; }
-  if (/unsafe-inline|unsafe-eval/.test(csp)) falla(`${nombre}: la política de seguridad permite código en línea ('unsafe-inline'/'unsafe-eval')`);
+  // 'wasm-unsafe-eval' sí se admite (solo deja compilar WebAssembly, no ejecutar texto como código): SQLite lo necesita.
+  if (/unsafe-inline|(?<!wasm-)unsafe-eval/.test(csp)) falla(`${nombre}: la política de seguridad permite código en línea ('unsafe-inline'/'unsafe-eval')`);
   for (const m of contenido.matchAll(/<script(\s[^>]*)?>([\s\S]*?)<\/script>/g)) {
     const [, atributos = "", cuerpo] = m;
     if (/\ssrc=/.test(atributos)) continue; // script externo: cubierto por script-src 'self'
@@ -95,6 +112,8 @@ function revisarSeguridad(nombre, contenido) {
 }
 revisarSeguridad("index.html", html);
 revisarSeguridad("404.html", leer("404.html"));
+revisarSeguridad("base-de-datos.html", bd);
+revisarSeguridad("exponer-bd.html", expo);
 
 if (fallos.length) {
   console.error(`✗ ${fallos.length} problema(s):\n` + fallos.map((f) => "  - " + f).join("\n"));
