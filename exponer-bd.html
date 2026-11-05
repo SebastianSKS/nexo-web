@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Misma política que el resto del sitio: nada de fuera, sin scripts ni estilos en línea. 'wasm-unsafe-eval' solo
+     deja arrancar SQLite (WebAssembly); no permite eval(). -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex">
+<title>Nexo · Exponer la base de datos</title>
+<meta name="description" content="La base de datos de Nexo en orden de exposición: modelo, restricciones, pruebas y consultas, con SQLite funcionando en el navegador.">
+<link rel="icon" href="assets/icono/favicon-64.png" type="image/png">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/barra.css">
+<link rel="stylesheet" href="css/portada.css">
+<link rel="stylesheet" href="css/secciones.css">
+<link rel="stylesheet" href="css/cierre.css">
+<link rel="stylesheet" href="css/presentacion.css">
+<link rel="stylesheet" href="css/exponer-bd.css">
+<script src="tema-antes.js"></script>
+<script src="assets/db/sql-wasm.js" defer></script>
+<script src="exponer-bd.js" defer></script>
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<svg width="0" height="0" class="sprite-oculto" aria-hidden="true" focusable="false">
+  <symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-luna" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+  <symbol id="i-reloj" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-calendario" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
+  <symbol id="i-carpeta" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-copia" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+  <symbol id="i-pantalla" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="m10 8.500 5 2.500-5 2.500zM8 21h8"/></symbol>
+</svg>
+
+<header class="barra" id="barra">
+  <div class="contenedor barra-in">
+    <a class="marca" href="./"><img src="assets/icono/nexo-256.png" width="30" height="30" alt=""><span>Nexo</span></a>
+    <nav class="enlaces" aria-label="Secciones">
+      <a href="#modelo">Modelo</a>
+      <a href="#reglas">Reglas</a>
+      <a href="#pruebas">Pruebas</a>
+      <a href="#datos">Datos</a>
+      <a href="#consultas">Consultas</a>
+    </nav>
+    <div class="acciones">
+      <button class="icono-btn" id="btn-presentar" type="button" title="Modo presentación (P)" aria-label="Modo presentación">
+        <svg class="ic"><use href="#i-play"/></svg>
+      </button>
+      <button class="icono-btn" id="btn-tema" type="button" title="Cambiar tema" aria-label="Cambiar tema">
+        <svg class="ic ic-luna"><use href="#i-luna"/></svg><svg class="ic ic-sol"><use href="#i-sol"/></svg>
+      </button>
+      <a class="boton chico secundario" href="base-de-datos.html">Base completa</a>
+    </div>
+  </div>
+</header>
+
+<main id="contenido">
+
+<!-- 1. Portada -->
+<section class="slide hero" id="portada" data-notas="Presentarse y decir de qué trata: la base de datos de Nexo, una aplicación de escritorio para estudiantes. La base ya está abierta en esta misma página: los números de la derecha salen de ella en vivo, no están escritos a mano. Pulsar «Empezar a exponer» o la tecla P para pasar a pantalla completa.">
+  <div class="contenedor">
+    <div class="hero-in">
+      <div class="hero-texto">
+        <p class="etiqueta">Taller de Bases de Datos · Práctica 3</p>
+        <h1>La base de datos de <em>Nexo.</em></h1>
+        <p class="lead">Diez tablas que guardan lo que un estudiante usa cada día, con reglas que impiden que los datos se rompan. Y funcionando de verdad, aquí mismo.</p>
+        <div class="cta-fila">
+          <button type="button" class="boton primario grande" id="btn-empezar"><svg class="ic"><use href="#i-play"/></svg>Empezar a exponer</button>
+          <a class="boton secundario grande" href="base-de-datos.html">Abrir la base completa</a>
+        </div>
+        <ul class="confianza" aria-label="Lo importante">
+          <li>SQLite real</li>
+          <li>Sin servidor</li>
+          <li>Todo en el navegador</li>
+        </ul>
+        <p class="autor">Fidel Sebastián González · ISMA-5</p>
+      </div>
+      <div class="cifras">
+        <div class="cifras-grid">
+          <div class="cifra"><strong id="c-tablas">—</strong><span>tablas</span></div>
+          <div class="cifra"><strong id="c-columnas">—</strong><span>columnas</span></div>
+          <div class="cifra"><strong id="c-relaciones">—</strong><span>relaciones</span></div>
+          <div class="cifra"><strong id="c-reglas">—</strong><span>restricciones</span></div>
+        </div>
+        <p class="cifras-estado" id="estado-db" role="status" aria-live="polite">Abriendo la base de datos…</p>
+        <button type="button" class="boton chico secundario" id="btn-reintentar" hidden>Reintentar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Qué guarda Nexo -->
+<section class="slide" id="que-guarda" data-notas="Explicar qué guarda Nexo en tres grupos: el semestre, el día a día y los archivos. No leer las tablas una por una: solo decir que en total son diez y que enseguida se ve cómo se conectan.">
+  <div class="contenedor">
+    <div class="encabezado">
+      <p class="etiqueta">El punto de partida</p>
+      <h2>Qué guarda <em>Nexo</em></h2>
+    </div>
+    <div class="rejilla tres-col">
+      <article class="tarjeta"><svg class="ic grande"><use href="#i-reloj"/></svg><h3>Tu semestre</h3><p>Las materias, cómo se evalúa cada una y en qué días y horas se cursan.</p><div class="tablas-chips"><code>materia</code><code>evaluacion</code><code>clase</code></div></article>
+      <article class="tarjeta"><svg class="ic grande"><use href="#i-calendario"/></svg><h3>Tu día a día</h3><p>Eventos con aviso, cumpleaños de tus amigos y pendientes rápidos.</p><div class="tablas-chips"><code>evento</code><code>cumpleanos</code><code>nota</code></div></article>
+      <article class="tarjeta"><svg class="ic grande"><use href="#i-carpeta"/></svg><h3>Tus archivos y tu mundo</h3><p>Una carpeta por materia con sus trabajos, los canales de video que sigues y tu perfil.</p><div class="tablas-chips"><code>carpeta</code><code>archivo</code><code>canal</code><code>perfil</code></div></article>
+    </div>
+    <p class="extra">En total son diez tablas. Casi todo gira alrededor de una: la materia.</p>
+  </div>
+</section>
+
+<!-- 3. Modelo -->
+<section class="slide" id="modelo" data-notas="Señalar la materia arriba: de ella cuelgan sus evaluaciones, sus clases y su carpeta, y la carpeta guarda los archivos. Cada línea es una relación de uno a muchos. En amarillo las llaves primarias (PK) y en azul las foráneas (FK), las que apuntan a otra tabla. Las de la derecha no se relacionan porque Nexo es de un solo usuario.">
+  <div class="contenedor">
+    <div class="encabezado">
+      <p class="etiqueta">Diseño</p>
+      <h2>El modelo: todo gira alrededor de la <em>materia</em></h2>
+    </div>
+    <div class="modelo">
+      <div class="arbol" id="arbol"><p class="suave">Cargando el modelo…</p></div>
+      <aside class="aparte">
+        <h3>Tablas independientes</h3>
+        <p class="suave">Nexo es de un solo usuario, así que estas no necesitan relacionarse con otras.</p>
+        <div class="sueltas" id="sueltas"></div>
+      </aside>
+    </div>
+    <p class="leyenda"><span class="col pk">PK</span> llave primaria · <span class="col fk">FK</span> llave foránea · <span id="relaciones"></span></p>
+  </div>
+</section>
+
+<!-- 4. Reglas -->
+<section class="slide" id="reglas" data-notas="Cinco tipos de restricciones. Los números son reales: salen contando en la propia base. Explicar cada una con su ejemplo, sin leer el código. La idea: la base no solo guarda datos, también impide que entren datos que no tienen sentido.">
+  <div class="contenedor">
+    <div class="encabezado">
+      <p class="etiqueta">Restricciones</p>
+      <h2>Las reglas que <em>cuidan los datos</em></h2>
+    </div>
+    <div class="reglas">
+      <article class="regla"><p class="regla-n" data-cuenta="pk">—</p><h3>PRIMARY KEY</h3><p>Cada fila tiene un identificador único: no puede haber dos materias iguales.</p><code>id_materia TEXT PRIMARY KEY</code></article>
+      <article class="regla"><p class="regla-n" data-cuenta="fk">—</p><h3>FOREIGN KEY</h3><p>Una evaluación solo puede pertenecer a una materia que existe.</p><code>REFERENCES materia(id_materia)</code></article>
+      <article class="regla"><p class="regla-n" data-cuenta="notnull">—</p><h3>NOT NULL</h3><p>Hay datos que no pueden faltar, como el nombre de una materia.</p><code>nombre TEXT NOT NULL</code></article>
+      <article class="regla"><p class="regla-n" data-cuenta="check">—</p><h3>CHECK</h3><p>El valor tiene que cumplir una condición, como los créditos de una materia.</p><code>CHECK (creditos BETWEEN 1 AND 20)</code></article>
+      <article class="regla"><p class="regla-n" data-cuenta="ondelete">—</p><h3>ON DELETE</h3><p>Qué pasa con los datos hijos cuando se borra al padre.</p><code>ON DELETE CASCADE</code></article>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Pruebas -->
+<section class="slide" id="pruebas" data-notas="Pulsar «Intentar» en cada fila y leer en voz alta el mensaje que devuelve la base: es SQLite quien responde, no la página. La última, el borrado en cascada, sí cambia datos, pero la deshago sola para poder repetirla. Si algo se descompone: «Restablecer base».">
+  <div class="contenedor">
+    <div class="encabezado">
+      <p class="etiqueta">Prueba de fuego</p>
+      <h2>Intento <em>romperlas</em></h2>
+    </div>
+    <div class="intentos" id="intentos"></div>
+    <div class="cta-fila">
+      <button type="button" class="boton chico secundario" id="btn-reset">Restablecer base</button>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Datos -->
+<section class="slide" id="datos" data-notas="Elegir una o dos tablas, por ejemplo materia y evaluacion, y mostrar que los datos coinciden con las relaciones del modelo. El desplegable «Ver cómo se creó» enseña el CREATE TABLE con todas sus restricciones.">
+  <div class="contenedor">
+    <div class="encabezado">
+      <p class="etiqueta">El contenido</p>
+      <h2>Los datos, <em>tabla por tabla</em></h2>
+    </div>
+    <div class="lista-tablas" id="lista-tablas" aria-label="Tablas de la base de datos"></div>
+    <div class="caja-datos">
+      <div class="panel-cab"><h3 id="tabla-titulo"></h3><span id="tabla-filas" class="suave"></span></div>
+      <div id="tabla-datos" class="tabla-caja"></div>
+      <details class="esquema">
+        <summary>Ver cómo se creó esta tabla (CREATE TABLE)</summary>
+        <pre id="tabla-esquema"></pre>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Consultas -->
+<section class="slide" id="consultas" data-notas="Pulsar una consulta y se ejecuta sola. Empezar por el JOIN y seguir con el promedio ponderado (GROUP BY), que es el reporte más útil de la app. Si preguntan por otra consulta, se puede editar el texto y ejecutar con Ctrl + Enter.">
+  <div class="contenedor">
+    <div class="encabezado">
+      <p class="etiqueta">Consultas</p>
+      <h2>Preguntarle <em>cosas</em> a la base</h2>
+    </div>
+    <div class="chips-consultas" id="chips-consultas" aria-label="Consultas de ejemplo"></div>
+    <div class="consola">
+      <div class="consola-sql">
+        <label class="campo" for="sql">Consulta SQL</label>
+        <textarea id="sql" rows="9" spellcheck="false" autocomplete="off"></textarea>
+        <div class="cta-fila"><button type="button" class="boton primario chico" id="btn-ejecutar">Ejecutar</button><span class="suave">Ctrl + Enter también ejecuta</span></div>
+      </div>
+      <div class="consola-res" id="resultado" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Entorno -->
+<section class="slide" id="entorno" data-notas="Aclarar el entorno: es SQLite real corriendo en el navegador, de forma local y sin servidor. El mismo archivo .sql se puede importar en Turso, que es SQLite en la nube. Mostrar los dos archivos que se pueden descargar.">
+  <div class="contenedor">
+    <div class="encabezado">
+      <p class="etiqueta">Entorno</p>
+      <h2>Un entorno <em>real</em>, sin servidor</h2>
+    </div>
+    <div class="rejilla tres-col">
+      <article class="tarjeta"><svg class="ic grande"><use href="#i-pantalla"/></svg><h3>SQLite de verdad</h3><p>No es una maqueta: es el motor SQLite compilado a WebAssembly, de la misma familia que usa Turso.</p></article>
+      <article class="tarjeta"><svg class="ic grande"><use href="#i-escudo"/></svg><h3>Local y privado</h3><p>Nada se envía a un servidor. Los cambios que hagas viven solo en tu navegador y se borran al recargar.</p></article>
+      <article class="tarjeta"><svg class="ic grande"><use href="#i-copia"/></svg><h3>Listo para la nube</h3><p>El mismo archivo .sql se puede importar en Turso, que es SQLite en la nube.</p></article>
+    </div>
+    <div class="cta-fila">
+      <a class="boton secundario" href="assets/db/nexo.sql" download>Descargar nexo.sql</a>
+      <a class="boton secundario" href="assets/db/nexo.db" download>Descargar nexo.db</a>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Cierre -->
+<section class="slide cierre" id="cierre" data-notas="Cierre: lo que sigue es llevar esta base a la propia aplicación, pasando los datos de archivos JSON a SQLite y haciendo los reportes con consultas SQL. Dar las gracias y abrir el turno de preguntas.">
+  <div class="contenedor"><div class="panel-cta centrado">
+    <img class="logo-grande" src="assets/icono/nexo-256.png" width="96" height="96" alt="">
+    <h2>Lo que <em>sigue</em></h2>
+    <p class="lead">Llevar esta base a la propia aplicación: pasar los datos de Nexo de archivos JSON a SQLite y hacer los reportes con consultas SQL.</p>
+    <div class="cta-fila centrado">
+      <a class="boton primario grande" href="base-de-datos.html">Abrir la base completa</a>
+      <a class="boton secundario grande" href="./">Volver a Nexo</a>
+    </div>
+    <p class="pie-nota">Gracias · ¿Preguntas?</p>
+  </div></div>
+</section>
+
+</main>
+
+<aside class="notas" id="notas" hidden aria-label="Notas de quien presenta"></aside>
+
+<div class="hud" id="hud" hidden aria-live="polite">
+  <span id="hud-num">1 / 9</span>
+  <span id="hud-tiempo" title="Tiempo de presentación">00:00</span>
+  <span class="hud-teclas">← →</span>
+  <button type="button" id="hud-notas" aria-pressed="false" title="Notas de quien presenta (N)">Notas</button>
+  <button type="button" id="hud-salir">Salir (Esc)</button>
+</div>
+
+</body>
+</html>
