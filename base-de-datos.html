@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Misma idea que la página principal: nada de fuera del propio sitio y sin scripts ni estilos en línea. La única
+     excepción es 'wasm-unsafe-eval', que SQLite (compilado a WebAssembly) necesita para arrancar; no permite eval(). -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Nexo · Base de datos</title>
+<meta name="description" content="La base de datos de Nexo, funcionando de verdad (SQLite) dentro de tu navegador: tablas, datos y consultas SQL.">
+<link rel="icon" href="assets/icono/favicon-64.png" type="image/png">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/barra.css">
+<link rel="stylesheet" href="css/basedatos.css">
+<script src="tema-antes.js"></script>
+<script src="assets/db/sql-wasm.js" defer></script>
+<script src="basedatos.js" defer></script>
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="barra">
+  <div class="contenedor barra-in">
+    <a class="marca" href="./"><img src="assets/icono/nexo-256.png" width="30" height="30" alt="">Nexo</a>
+    <div class="acciones">
+      <a class="boton chico secundario" href="./">Volver a Nexo</a>
+    </div>
+  </div>
+</header>
+
+<main id="contenido" class="contenedor bd">
+  <p class="etiqueta">Taller de Bases de Datos · Práctica 3</p>
+  <h1>La base de datos de <em>Nexo</em></h1>
+  <p class="lead">Nexo guarda tu horario, tus evaluaciones, tus eventos y tus archivos en tablas relacionadas. Aquí está esa base de datos, funcionando de verdad: es SQLite corriendo dentro de tu navegador, sin servidor y sin enviar nada a ningún lado.</p>
+
+  <div class="bd-acciones">
+    <button type="button" id="btn-ver" class="boton primario grande">Ver base de datos</button>
+    <a class="boton secundario grande" href="assets/db/nexo.sql" download>Descargar el SQL</a>
+    <a class="boton secundario grande" href="assets/db/nexo.db" download>Descargar nexo.db</a>
+  </div>
+  <p id="estado" class="estado" role="status" aria-live="polite"></p>
+
+  <section id="visor" class="visor" hidden>
+    <h2>Tablas</h2>
+    <div id="lista-tablas" class="lista-tablas" role="tablist" aria-label="Tablas de la base de datos"></div>
+
+    <div class="panel">
+      <div class="panel-cab">
+        <h3 id="tabla-titulo"></h3>
+        <span id="tabla-filas" class="suave"></span>
+      </div>
+      <div id="tabla-datos" class="tabla-caja"></div>
+      <details class="esquema">
+        <summary>Ver cómo se creó esta tabla (CREATE TABLE)</summary>
+        <pre id="tabla-esquema"></pre>
+      </details>
+    </div>
+
+    <h2 class="sep">Consultas SQL</h2>
+    <p class="suave">Elige un ejemplo o escribe tu propia consulta. Los cambios que hagas (INSERT, UPDATE, DELETE) viven solo en tu navegador y se borran al recargar o con «Restablecer».</p>
+
+    <div class="consola">
+      <label class="campo" for="ejemplos">Consultas de ejemplo</label>
+      <select id="ejemplos"></select>
+      <label class="campo" for="sql">Consulta</label>
+      <textarea id="sql" rows="6" spellcheck="false" autocomplete="off"></textarea>
+      <div class="consola-botones">
+        <button type="button" id="btn-ejecutar" class="boton primario">Ejecutar</button>
+        <button type="button" id="btn-reset" class="boton secundario">Restablecer base</button>
+        <span class="suave">Ctrl + Enter también ejecuta</span>
+      </div>
+      <div id="resultado" class="resultado" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

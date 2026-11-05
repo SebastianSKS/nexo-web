@@ -1,0 +1,58 @@
+/* Nexo · página de la base de datos (práctica de Taller de Bases de Datos). Usa los colores y la tipografía del sitio. */
+
+body { padding-top: var(--alto-barra); }
+.bd { padding-block: 56px 96px; }
+.bd .etiqueta { font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--suave); margin-bottom: 14px; }
+.bd h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+.bd h2 { font-size: 1.7rem; margin: 40px 0 14px; }
+.bd h2.sep { margin-top: 56px; }
+.bd h3 { font-size: 1.25rem; }
+.suave { color: var(--suave); font-size: 0.95rem; }
+
+.bd-acciones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.estado { min-height: 1.6em; margin-top: 14px; color: var(--suave); }
+.estado.error { color: #c0392b; }
+:root[data-theme="dark"] .estado.error { color: #ff8a7a; }
+.boton:disabled { opacity: 0.55; cursor: progress; transform: none; box-shadow: none; }
+
+/* Lista de tablas: una pestaña por tabla, con su número de filas. */
+.lista-tablas { display: flex; flex-wrap: wrap; gap: 8px; }
+.lista-tablas button { font: inherit; font-family: var(--mono); font-size: 0.88rem; cursor: pointer; color: var(--texto); background: var(--capa); border: 1px solid var(--borde); border-radius: var(--radio); padding: 8px 12px; transition: border-color 0.15s, background 0.15s; }
+.lista-tablas button:hover { border-color: var(--texto); }
+.lista-tablas button[aria-selected="true"] { background: var(--texto); color: var(--fondo); border-color: var(--texto); }
+.lista-tablas .n { opacity: 0.65; margin-left: 6px; }
+
+.panel { margin-top: 18px; background: var(--capa); border: 1px solid var(--borde); border-radius: var(--radio); box-shadow: var(--sombra); padding: 18px; }
+.panel-cab { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+.panel-cab h3 { font-family: var(--mono); font-weight: 600; letter-spacing: 0; }
+
+/* Tablas de datos: con scroll horizontal en pantallas angostas, sin romper la página. */
+.tabla-caja { overflow-x: auto; border: 1px solid var(--borde); border-radius: var(--radio); background: var(--fondo); }
+.tabla-caja table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+.tabla-caja th, .tabla-caja td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--borde); white-space: nowrap; vertical-align: top; }
+.tabla-caja th { font-family: var(--mono); font-size: 0.8rem; font-weight: 600; color: var(--suave); background: var(--fondo-alt); position: sticky; top: 0; }
+.tabla-caja tr:last-child td { border-bottom: 0; }
+.tabla-caja .nulo { color: var(--suave); font-style: italic; }
+.tabla-caja .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.esquema { margin-top: 14px; }
+.esquema summary { cursor: pointer; color: var(--suave); }
+.esquema pre, .consola textarea { font-family: var(--mono); font-size: 0.86rem; line-height: 1.5; }
+.esquema pre { margin: 10px 0 0; padding: 14px; overflow-x: auto; background: var(--fondo-alt); border: 1px solid var(--borde); border-radius: var(--radio); }
+
+.consola { margin-top: 18px; display: grid; gap: 8px; }
+.campo { font-size: 0.85rem; font-weight: 600; color: var(--suave); margin-top: 6px; }
+.consola select, .consola textarea { width: 100%; color: var(--texto); background: var(--fondo); border: 1px solid var(--borde-fuerte); border-radius: var(--radio); padding: 10px 12px; }
+.consola select { font: inherit; }
+.consola textarea { resize: vertical; min-height: 120px; }
+.consola-botones { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 6px; }
+.resultado { display: grid; gap: 14px; margin-top: 10px; }
+.resultado .msg { padding: 12px 14px; border: 1px solid var(--borde); border-radius: var(--radio); background: var(--capa); }
+.resultado .msg.error { border-color: #c0392b; color: #c0392b; font-family: var(--mono); font-size: 0.88rem; }
+:root[data-theme="dark"] .resultado .msg.error { border-color: #ff8a7a; color: #ff8a7a; }
+.resultado .pie { color: var(--suave); font-size: 0.85rem; margin-top: 6px; }
+
+@media (max-width: 640px) {
+  .bd { padding-block: 36px 72px; }
+  .bd-acciones .boton { width: 100%; }
+}
