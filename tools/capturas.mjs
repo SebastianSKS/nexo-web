@@ -77,6 +77,15 @@ const tarjetas = [
   ["m2", "Segunda ley de Newton", "F = m · a"],
   ["m2", "Unidad de la fuerza", "Newton (N) = kg · m/s²"],
 ].map((t, i) => ({ id: `t${i}`, mazoId: t[0], frente: t[1], reverso: t[2], facilidad: 2.5, intervalo: 0, repeticiones: 0, vence: 0, creada: Date.now() }));
+// Promedio (pestaña de la Calculadora): escala de 10, tres materias con evaluaciones a medias.
+const promedio = {
+  escala: { maximo: 10, minimoAprobatorio: 6 },
+  materias: [
+    ["Cálculo diferencial", 5, [["Examen 1", 30, 8.5], ["Examen 2", 30, 7.0], ["Tareas", 20, 9.5], ["Examen final", 20, null]]],
+    ["Programación", 5, [["Proyecto", 40, 9.2], ["Prácticas", 30, 8.8], ["Examen", 30, null]]],
+    ["Física", 4, [["Examen 1", 40, 6.5], ["Laboratorio", 30, 8.0], ["Examen final", 30, null]]],
+  ].map((m, i) => ({ id: `pm${i}`, nombre: m[0], creditos: m[1], evaluaciones: m[2].map((e, j) => ({ id: `pe${i}${j}`, nombre: e[0], peso: e[1], calificacion: e[2] })) })),
+};
 
 const guias = ["bienvenida", "video", "musica", "documentos", "herramienta", "carpetas", "calendario", "horario", "calculadora", "configuracion", "atajos"];
 const sembrar = (tema, idioma) => `
@@ -87,6 +96,7 @@ const sembrar = (tema, idioma) => `
   localStorage.setItem("nexushub-eventos", ${JSON.stringify(JSON.stringify(eventos))});
   localStorage.setItem("nexushub-notas", ${JSON.stringify(JSON.stringify(notas))});
   localStorage.setItem("nexushub-repaso", ${JSON.stringify(JSON.stringify({ mazos, tarjetas }))});
+  localStorage.setItem("nexushub-promedio", ${JSON.stringify(JSON.stringify(promedio))});
   localStorage.setItem("nexushub-perfil", ${JSON.stringify(JSON.stringify({ nombre: "Ana" }))});
   localStorage.setItem("nexushub-primeros-pasos", ${JSON.stringify(JSON.stringify({ buscador: true, carpetas: true, descartado: true, completado: true }))});
   localStorage.setItem("nexushub-consejos-vistos", ${JSON.stringify(JSON.stringify(["clase", "evento", "carpeta"]))});
@@ -122,9 +132,14 @@ await ev(sembrar("oscuro", "es"));
 await ir("/inicio", "inicio");
 await ir("/horario", "horario");
 await ir("/calendario", "calendario");
-await ir("/documentos", "documentos");
+// Documentos: arranca en la rejilla de herramientas (si no, la captura solo enseña la zona de arrastrar archivos).
+const alasHerramientas = async () => { await ev(`[...document.querySelectorAll("h2, h3")].find((h) => /^(Herramientas|Tools)$/.test(h.textContent.trim()))?.scrollIntoView({ block: "start" })`); };
+await ir("/documentos", "documentos", 2500, alasHerramientas);
 await ir("/documentos/dividir-pdf", "dividir-pdf");
+await ir("/documentos/desbloquear-pdf", "desbloquear-pdf");
 await ir("/calculadora", "calculadora");
+// Promedio: la otra pestaña de la Calculadora, con las calificaciones y lo que falta para aprobar.
+await ir("/calculadora", "promedio", 2500, async () => { await ev(`[...document.querySelectorAll("button, [role=radio], [role=tab]")].find((b) => b.textContent.trim() === "Promedio")?.click()`); });
 await ir("/configuracion", "configuracion", 2500, async () => { await ev(`document.querySelector('[data-ajuste-ahorro], h2')?.scrollIntoView()`); });
 // Repaso: una tarjeta en pleno estudio, con la respuesta ya mostrada y los tres botones para calificarla.
 await ir("/repaso?mazo=m1&modo=estudio", "repaso", 2500, async () => { await ev(`[...document.querySelectorAll("button")].find((b) => /Mostrar respuesta/.test(b.textContent))?.click()`); });
@@ -134,7 +149,7 @@ await ir("/inicio", "buscador-examen", 2500, async () => { await buscar("tarea")
 // Inglés
 await ev(sembrar("oscuro", "en"));
 await ir("/inicio", "ingles-inicio");
-await ir("/documentos", "ingles-documentos");
+await ir("/documentos", "ingles-documentos", 2500, alasHerramientas);
 
 // Tema claro
 await ev(sembrar("claro", "es"));
