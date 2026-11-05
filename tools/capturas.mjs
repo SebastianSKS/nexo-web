@@ -63,6 +63,20 @@ const notas = [
   { id: "n2", texto: "Leer el capítulo 4 de física", hecha: false },
   { id: "n3", texto: "Imprimir el reporte de laboratorio", hecha: false },
 ];
+// Repaso: dos mazos inventados, con todas las tarjetas por repasar hoy (vence 0).
+const mazos = [
+  { id: "m1", nombre: "Cálculo diferencial", materia: "MAT-1010", creado: Date.now() },
+  { id: "m2", nombre: "Física", materia: "FIS-1005", creado: Date.now() },
+];
+const tarjetas = [
+  ["m1", "Regla de la cadena", "(f ∘ g)′(x) = f′(g(x)) · g′(x)"],
+  ["m1", "Derivada de xⁿ", "n · xⁿ⁻¹"],
+  ["m1", "Derivada de sen(x)", "cos(x)"],
+  ["m1", "¿Qué indica f′(x) = 0?", "Un punto crítico: posible máximo, mínimo o punto de inflexión."],
+  ["m1", "Límite de sen(x)/x cuando x → 0", "1"],
+  ["m2", "Segunda ley de Newton", "F = m · a"],
+  ["m2", "Unidad de la fuerza", "Newton (N) = kg · m/s²"],
+].map((t, i) => ({ id: `t${i}`, mazoId: t[0], frente: t[1], reverso: t[2], facilidad: 2.5, intervalo: 0, repeticiones: 0, vence: 0, creada: Date.now() }));
 
 const guias = ["bienvenida", "video", "musica", "documentos", "herramienta", "carpetas", "calendario", "horario", "calculadora", "configuracion", "atajos"];
 const sembrar = (tema, idioma) => `
@@ -72,6 +86,7 @@ const sembrar = (tema, idioma) => `
   localStorage.setItem("nexushub-horario", ${JSON.stringify(JSON.stringify(clases))});
   localStorage.setItem("nexushub-eventos", ${JSON.stringify(JSON.stringify(eventos))});
   localStorage.setItem("nexushub-notas", ${JSON.stringify(JSON.stringify(notas))});
+  localStorage.setItem("nexushub-repaso", ${JSON.stringify(JSON.stringify({ mazos, tarjetas }))});
   localStorage.setItem("nexushub-perfil", ${JSON.stringify(JSON.stringify({ nombre: "Ana" }))});
   localStorage.setItem("nexushub-primeros-pasos", ${JSON.stringify(JSON.stringify({ buscador: true, carpetas: true, descartado: true, completado: true }))});
   localStorage.setItem("nexushub-consejos-vistos", ${JSON.stringify(JSON.stringify(["clase", "evento", "carpeta"]))});
@@ -84,6 +99,7 @@ async function foto(nombre) {
   console.log("ok", nombre);
 }
 async function ir(ruta, nombre, espera = 2500, antes) {
+  if (process.env.SOLO && process.env.SOLO !== nombre) return; // SOLO=repaso rehace solo esa captura y no toca las demás
   await send("Page.navigate", { url: base + ruta });
   await esperar(espera);
   if (antes) { await antes(); await esperar(900); }
@@ -110,6 +126,8 @@ await ir("/documentos", "documentos");
 await ir("/documentos/dividir-pdf", "dividir-pdf");
 await ir("/calculadora", "calculadora");
 await ir("/configuracion", "configuracion", 2500, async () => { await ev(`document.querySelector('[data-ajuste-ahorro], h2')?.scrollIntoView()`); });
+// Repaso: una tarjeta en pleno estudio, con la respuesta ya mostrada y los tres botones para calificarla.
+await ir("/repaso?mazo=m1&modo=estudio", "repaso", 2500, async () => { await ev(`[...document.querySelectorAll("button")].find((b) => /Mostrar respuesta/.test(b.textContent))?.click()`); });
 await ir("/inicio", "buscador", 2500, async () => { await buscar("fisica"); await esperar(800); });
 await ir("/inicio", "buscador-examen", 2500, async () => { await buscar("tarea"); await esperar(800); });
 
