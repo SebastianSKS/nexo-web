@@ -26,7 +26,8 @@ Recorre sin leer todas las tarjetas. Resalta tres:
 
 - **Horario desde una foto**: escaneas la imagen que te mandaron y se llena solo.
 - **Una carpeta por materia**: se crean desde tu horario.
-- **17 herramientas de documentos** que funcionan sin internet.
+- **18 herramientas de documentos** que funcionan sin internet.
+- **Repaso**: tarjetas de estudio que Nexo te repite justo antes de que se te olviden.
 
 Aclara: la música de Spotify pide Premium; lo demás no depende de Spotify.
 
@@ -34,7 +35,7 @@ Aclara: la música de Spotify pide Premium; lo demás no depende de Spotify.
 
 Aquí está la **demo**: si hay conexión, abre «Abrir la demo» y enséñala en vivo (es la aplicación real con datos de ejemplo). Es más convincente que cualquier captura.
 
-Usa las teclas **1 a 6** para cambiar de pantalla: Horario, Calendario, Documentos, Dividir un PDF, Calculadora, Configuración. Recuerda que los datos de las capturas son inventados.
+Usa las teclas **1 a 7** para cambiar de pantalla: Horario, Calendario, Documentos, Dividir un PDF, Calculadora, Repaso, Configuración. Recuerda que los datos de las capturas son inventados.
 
 ## 5. Buscador · 1 min
 
@@ -44,7 +45,7 @@ Usa las teclas **1 a 6** para cambiar de pantalla: Horario, Calendario, Document
 
 ## 6. Documentos · 30 s
 
-> «Diecisiete herramientas, sin subir nada. Si tienes Office instalado, Nexo lo usa para que el resultado salga idéntico.»
+> «Dieciocho herramientas, sin subir nada. Si tienes Office instalado, Nexo lo usa para que el resultado salga idéntico.»
 
 ## 7. Hazlo tuyo · 45 s
 

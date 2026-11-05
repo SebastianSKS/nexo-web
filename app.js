@@ -1,7 +1,7 @@
 /* Nexo · página de presentación. Sin dependencias.
    - El texto está escrito en español en el HTML; lo que lleva data-en (o data-en-alt, data-en-title…) tiene su versión en inglés.
    - Tema, idioma y color de acento se recuerdan en este navegador.
-   - Modo presentación: tecla P (o el botón ▶). Flechas para pasar de sección, 1–6 para cambiar de pantalla en «Recorrido», Esc para salir. */
+   - Modo presentación: tecla P (o el botón ▶). Flechas para pasar de sección, 1–7 para cambiar de pantalla en «Recorrido», Esc para salir. */
 (function () {
   "use strict";
 
@@ -216,7 +216,7 @@
     if (!presentando) return;
     if (k === "Escape") { e.preventDefault(); salirPresentacion(); return; }
     if (k === "n" || k === "N") { e.preventDefault(); alternarNotas(); return; }
-    if (/^[1-6]$/.test(k)) {
+    if (/^[1-7]$/.test(k)) {
       var tabs = $$(".pestanas [role=tab]");
       if (tabs[Number(k) - 1]) { elegirPestana(tabs[Number(k) - 1].dataset.tab); irA(diapositivas().indexOf($("#recorrido"))); }
       return;

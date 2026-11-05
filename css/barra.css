@@ -24,11 +24,6 @@
 .boton .ic { transition: transform 0.2s; }
 .boton.primario:hover .ic { transform: translateY(2px); }
 
-/* El enlace a la base de datos solo cabe en la barra en pantallas anchas (con él, a 961 px los botones de la derecha se
-   salían de la pantalla); en las demás se llega desde el pie de página. */
-@media (max-width: 1100px) {
-  .enlaces a[href="base-de-datos.html"] { display: none; }
-}
 @media (max-width: 960px) {
   .enlaces { display: none; }
 }
