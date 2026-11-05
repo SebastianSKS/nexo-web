@@ -10,11 +10,22 @@ fs.rmSync(SALIDA, { recursive: true, force: true });
 fs.mkdirSync(path.join(SALIDA, "f"), { recursive: true });
 const PERFIL = path.join(process.env.TEMP, "nexo-video-perfil" + Date.now());
 const ANCHO = 1280, ALTO = 800;
+// Repaso (escena 5): un mazo inventado, con todas las tarjetas por repasar hoy (vence 0).
+const MAZOS = [{ id: "m1", nombre: "Cálculo diferencial", materia: "MAT-1010", creado: Date.now() }];
+const TARJETAS = [
+  ["Regla de la cadena", "(f ∘ g)′(x) = f′(g(x)) · g′(x)"],
+  ["Derivada de xⁿ", "n · xⁿ⁻¹"],
+  ["Derivada de sen(x)", "cos(x)"],
+  ["¿Qué indica f′(x) = 0?", "Un punto crítico: posible máximo, mínimo o punto de inflexión."],
+].map((t, i) => ({ id: `t${i}`, mazoId: "m1", frente: t[0], reverso: t[1], facilidad: 2.5, intervalo: 0, repeticiones: 0, vence: 0, creada: Date.now() }));
 
 const limpiarEdge = () => spawnSync("powershell", ["-NoProfile", "-Command", "Get-CimInstance Win32_Process -Filter \"Name='msedge.exe'\" | Where-Object { $_.CommandLine -match 'nexo-video-perfil' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"]);
 limpiarEdge(); // un Edge de una grabación anterior seguiría escuchando en el mismo puerto y la grabación se haría sobre su estado viejo
 await new Promise((r) => setTimeout(r, 1500));
-const edge = spawn("C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", ["--headless=new", "--remote-debugging-port=9460", `--user-data-dir=${PERFIL}`, `--window-size=${ANCHO},${ALTO}`, "--hide-scrollbars", "--no-first-run", "--disable-gpu", "about:blank"], { stdio: "ignore" });
+const edge = spawn("C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", ["--headless=new", "--remote-debugging-port=9460", `--user-data-dir=${PERFIL}`, `--window-size=${ANCHO},${ALTO}`, "--hide-scrollbars", "--no-first-run", "--disable-gpu",
+  // Sin estas, Edge cree que su ventana sin cabeza está tapada y baja el dibujo a ~1 fotograma por segundo (o lo detiene): el video sale entrecortado.
+  "--disable-features=CalculateNativeWinOcclusion,IntensiveWakeUpThrottling", "--disable-renderer-backgrounding", "--disable-backgrounding-occluded-windows", "--disable-background-timer-throttling",
+  "about:blank"], { stdio: "ignore" });
 const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
 let t; for (let i = 0; i < 40; i++) { try { t = await (await fetch("http://127.0.0.1:9460/json")).json(); if (t[0]) break; } catch {} await esperar(500); }
 const ws = new WebSocket(t.find((x) => x.type === "page").webSocketDebuggerUrl); await new Promise((r) => (ws.onopen = r));
@@ -37,7 +48,8 @@ const bucle = (async () => {
   while (activo) {
     if (!grabando) { await esperar(20); continue; }
     try {
-      const s = await send("Page.captureScreenshot", { format: "jpeg", quality: 85 });
+      // Con tope de 4 s: si Edge no contesta una captura, se sigue (y el cierre de la grabación no se queda esperando para siempre).
+      const s = await Promise.race([send("Page.captureScreenshot", { format: "jpeg", quality: 85 }), esperar(4000).then(() => null)]);
       if (!grabando || !s?.data) continue;
       const n = ++contador;
       fs.writeFileSync(path.join(SALIDA, "f", `${String(n).padStart(6, "0")}.jpg`), Buffer.from(s.data, "base64"));
@@ -77,7 +89,8 @@ await send("Page.addScriptToEvaluateOnNewDocument", { source: CURSOR });
 async function ir(ruta) {
   await send("Page.navigate", { url: BASE + ruta }); await esperar(3500);
 }
-async function cap(txt) { await ev(`__cap(${JSON.stringify(txt)})`); }
+async function cap(txt) { console.log(`[${((Date.now() - INICIO) / 1000).toFixed(0)} s] ${txt || "(sin rótulo)"}`); await ev(`__cap(${JSON.stringify(txt)})`); }
+const INICIO = Date.now();
 async function clicEn(buscarJS, { escribe } = {}) {
   const c = await ev(`__centro(() => (${buscarJS}))`);
   if (!c) throw new Error("no encuentro: " + buscarJS);
@@ -150,16 +163,40 @@ await esperar(1000);
 await cap("Exámenes, tareas y citas, cada uno con su aviso");
 await esperar(3000);
 
-// ——— Escena 5: documentos ———
+// ——— Escena 5: repaso (tarjetas de estudio) ———
+await cap("");
+await pausar();
+await ev(`localStorage.setItem("nexushub-repaso", ${JSON.stringify(JSON.stringify({ mazos: MAZOS, tarjetas: TARJETAS }))})`); // antes de entrar: la sección lee sus datos al abrirse
+await seguir();
+await clicEn(navItem("Repaso"));
+await esperar(1000);
+await cap("Repaso: tarjetas de estudio por materia");
+await esperar(2800);
+await clicEn(boton("Estudiar"));
+await esperar(1200);
+await cap("Lees la pregunta, piensas y miras la respuesta");
+await esperar(2200);
+await clicEn(boton("Mostrar respuesta"));
+await esperar(1600);
+await cap("Calificas qué tan bien te la supiste");
+await esperar(2000);
+await clicEn(boton("^Bien$"));
+await esperar(900);
+await cap("Nexo te la repite justo antes de que se te olvide");
+await esperar(3000);
+
+// ——— Escena 6: documentos ———
 await cap("");
 await clicEn(navItem("Documentos"));
 await esperar(1000);
-await cap("17 herramientas para tus PDF y archivos de Office. Nada se sube a internet");
+await ev(`[...document.querySelectorAll("h2, h3")].find((h) => /^Herramientas$/.test(h.textContent.trim()))?.scrollIntoView({ block: "start" })`); // la rejilla de herramientas a la vista
+await esperar(500);
+await cap("18 herramientas para tus PDF y archivos de Office. Nada se sube a internet");
 await esperar(3200);
 
 // ——— Cierre ———
 await cap("");
-await ev(`(() => { const e = document.createElement("div"); e.id = "__fin"; e.style.cssText = "position:fixed;inset:0;z-index:100000;background:#f5f2ea;color:#16181d;display:grid;place-content:center;text-align:center;gap:14px;font-family:Georgia,serif;opacity:0;transition:opacity .6s"; e.innerHTML = '<div style="font:700 22px Segoe UI,sans-serif;letter-spacing:.14em;color:#5a5e67">NEXO</div><div style="font-size:64px;font-weight:700;line-height:1.05">Tu carrera,<br><i style=\\'color:#1b4fd8;font-weight:400\\'>en un solo lugar.</i></div><div style="font:500 22px Segoe UI,sans-serif;color:#5a5e67;margin-top:10px">Gratis por ahora · Windows 10 y 11</div><div style="font:600 24px Segoe UI,sans-serif;margin-top:6px">sebastiansks.github.io/nexo-web</div>'; document.body.append(e); requestAnimationFrame(() => e.style.opacity = 1); })()`);
+await ev(`(() => { const e = document.createElement("div"); e.id = "__fin"; e.style.cssText = "position:fixed;inset:0;z-index:100000;background:#f5f2ea;color:#16181d;display:grid;place-content:center;text-align:center;gap:14px;font-family:Georgia,serif;opacity:0;transition:opacity .6s"; e.innerHTML = '<div style="font:700 22px Segoe UI,sans-serif;letter-spacing:.14em;color:#5a5e67">NEXO</div><div style="font-size:64px;font-weight:700;line-height:1.05">Tu carrera,<br><i style=\\'color:#1b4fd8;font-weight:400\\'>en un solo lugar.</i></div><div style="font:500 22px Segoe UI,sans-serif;color:#5a5e67;margin-top:10px">Gratis por ahora · Windows y Linux</div><div style="font:600 24px Segoe UI,sans-serif;margin-top:6px">sebastiansks.github.io/nexo-web</div>'; document.body.append(e); requestAnimationFrame(() => e.style.opacity = 1); })()`);
 await esperar(3000);
 await pausar();
 activo = false; await bucle;
