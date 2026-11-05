@@ -10,7 +10,7 @@ Unos **6 a 8 minutos**. Abre la página, pulsa **P** y ve pasando con las flecha
 
 ## 1. Portada · 30 s
 
-El video de la portada (50 s, sin sonido) cuenta lo esencial: puedes dejarlo correr mientras hablas.
+El video de la portada (poco más de un minuto, sin sonido) cuenta lo esencial: puedes dejarlo correr mientras hablas.
 
 > «Esto es Nexo: una app para Windows hecha para estudiantes. En vez de diez pestañas y apps sueltas, un solo lugar para el horario, el calendario, las tareas, los documentos, la música y el video. No pide cuenta, todo se queda en tu computadora y por el momento es gratis.»
 
@@ -35,7 +35,7 @@ Aclara: la música de Spotify pide Premium; lo demás no depende de Spotify.
 
 Aquí está la **demo**: si hay conexión, abre «Abrir la demo» y enséñala en vivo (es la aplicación real con datos de ejemplo). Es más convincente que cualquier captura.
 
-Usa las teclas **1 a 7** para cambiar de pantalla: Horario, Calendario, Documentos, Dividir un PDF, Calculadora, Repaso, Configuración. Recuerda que los datos de las capturas son inventados.
+Usa las teclas **1 a 9** para cambiar de pantalla: Horario, Calendario, Documentos, Dividir un PDF, Desbloquear un PDF, Calculadora, Promedio, Repaso, Configuración. Recuerda que los datos de las capturas son inventados.
 
 ## 5. Buscador · 1 min
 
@@ -73,7 +73,7 @@ Tres pasos: descargar, instalar (sin permisos de administrador) y seguir los «P
 
 Adelántate a lo que van a preguntar:
 
-- **¿Mac o celular?** Por ahora solo Windows 10 y 11.
+- **¿Mac o celular?** Por ahora no: Nexo es para Windows 10 y 11 y para Linux (.deb y AppImage).
 - **Windows me muestra un aviso al instalar.** Es normal en apps nuevas (SmartScreen): «Más información» y «Ejecutar de todos modos».
 - **¿Spotify?** Pide Premium para reproducir dentro de Nexo; además Spotify limita las apps nuevas a cuentas autorizadas a mano.
 - **¿Cuánto cuesta?** Por el momento es gratis. Lo único de pago es Spotify Premium, y eso es de Spotify.

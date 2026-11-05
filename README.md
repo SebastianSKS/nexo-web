@@ -26,7 +26,7 @@ Pulsa **P** (o el botón ▶ de la barra). Cada sección ocupa toda la pantalla.
 | `→` `↓` `Espacio` `Re Pág` | Sección siguiente |
 | `←` `↑` `Av Pág` | Sección anterior |
 | `Inicio` / `Fin` | Primera / última sección |
-| `1` – `6` | En «Recorrido», cambia de pantalla |
+| `1` – `9` | En «Recorrido», cambia de pantalla |
 | `N` | Muestra u oculta las notas de quien presenta |
 | `Esc` | Sale |
 
@@ -42,9 +42,11 @@ Español e inglés (botón **EN / ES**), tema «papel» (claro, el de siempre) y
 - `css/`: los estilos, por partes (`base`, `barra`, `portada`, `secciones`, `historial`, `cierre` y `presentacion`).
 - `app.js`: idioma, tema, pestañas, presentación y versión publicada.
 - `assets/capturas/`: capturas de la app con datos inventados.
-- `assets/video/`: el video de la portada (50 s, sin sonido, con subtítulos) y su imagen.
+- `assets/video/`: el video de la portada (poco más de un minuto, sin sonido, con subtítulos) y su imagen.
+- `assets/og.png`: la imagen que se ve al compartir el enlace.
 - `assets/fuentes/`: la tipografía de los titulares (Fraunces, licencia SIL OFL).
-- `tools/`: para rehacer las capturas y comprobar el sitio.
+- `assets/db/` y `base-de-datos.html` / `exponer-bd.html`: la base de datos de Nexo funcionando en el navegador (SQLite) y su versión para exponer.
+- `tools/`: para rehacer las capturas, el video y la imagen para compartir, y para comprobar el sitio.
 
 La versión y el enlace de descarga se leen solos del último *release* de GitHub. Si no hay red, el botón lleva a la página de versiones.
 
@@ -61,7 +63,7 @@ python tools/horario-ejemplo.py
 node tools/grabar-video.mjs
 ```
 
-Necesita Edge y ffmpeg. Deja `nexo-demo.mp4` en la carpeta temporal.
+Necesita Edge y ffmpeg. Deja `nexo-demo.mp4` en la carpeta temporal; cópialo a `assets/video/` y saca la imagen de portada de uno de sus primeros fotogramas (`poster.webp`). En Git Bash, anteponer `MSYS_NO_PATHCONV=1` al comando de compilación: si no, convierte `/nexo-web/demo` en una ruta de Windows.
 
 ## Rehacer las capturas
 
@@ -70,7 +72,10 @@ Con la carpeta `out` de Nexo servida en el puerto 4173 (`npm run build` en el re
 ```bash
 node tools/capturas.mjs
 python tools/a-webp.py
+node tools/og.mjs
 ```
+
+Con `SOLO=repaso node tools/capturas.mjs` se rehace una sola captura. `tools/og.mjs` rehace la imagen para compartir el enlace a partir de la captura de Inicio en tema claro, así que corre después de las capturas.
 
 ## Comprobar el sitio
 

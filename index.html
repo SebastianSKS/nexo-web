@@ -139,7 +139,7 @@
     </div>
     <div class="hero-visual">
     <figure class="ventana hero-img">
-      <video class="hero-video" width="1280" height="800" poster="assets/video/poster.webp" autoplay muted loop playsinline controls preload="metadata" aria-label="Video de 50 segundos: Nexo muestra tu día, lee la foto de un horario, busca con Ctrl + K y abre el calendario y los documentos." data-en-aria-label="50-second video: Nexo shows your day, reads a photo of a schedule, searches with Ctrl + K and opens the calendar and the documents.">
+      <video class="hero-video" width="1280" height="800" poster="assets/video/poster.webp" autoplay muted loop playsinline controls preload="metadata" aria-label="Video de un minuto: Nexo muestra tu día, lee la foto de un horario, busca con Ctrl + K, abre el calendario, estudia con tarjetas y abre los documentos." data-en-aria-label="One-minute video: Nexo shows your day, reads a photo of a schedule, searches with Ctrl + K, opens the calendar, studies with cards and opens the documents.">
         <source src="assets/video/nexo-demo.mp4" type="video/mp4">
       </video>
     </figure>
@@ -185,7 +185,7 @@
       <h2 data-en="What you use every day, in one place">Lo que usas a diario, en un solo lugar</h2>
     </div>
     <ol class="indice">
-      <li><h3 data-en="Schedule from a photo">Horario desde una foto</h3><p data-en="Take a photo or screenshot of the schedule you were given and Nexo reads it: it picks out the subjects, days and times. It reminds you before every class.">Toma una foto o una captura del horario que te dieron y Nexo lo lee: saca las materias, los días y las horas. Antes de cada clase te avisa.</p></li>
+      <li><h3 data-en="Schedule from a photo">Horario desde una foto</h3><p data-en="Take a photo or screenshot of the schedule you were given and Nexo reads it: it picks out the subjects, days and times. It reminds you before every class, and you can share your schedule with a classmate as a file or a code.">Toma una foto o una captura del horario que te dieron y Nexo lo lee: saca las materias, los días y las horas. Antes de cada clase te avisa, y puedes compartirlo con un compañero como archivo o como un código.</p></li>
       <li><h3 data-en="Calendar with reminders">Calendario con avisos</h3><p data-en="Add tasks, exams, appointments and birthdays, each with its own color. Nexo reminds you a few minutes before an exam that has a time, and you can export everything to .ics.">Anota tareas, exámenes, citas y cumpleaños, cada uno con su color. Nexo te avisa unos minutos antes de un examen con hora, y puedes exportarlo todo a .ics.</p></li>
       <li><h3 data-en="A folder per subject">Una carpeta por materia</h3><p data-en="Nexo creates a folder for each subject in your schedule, inside Documents\Nexo\Tareas. Right there you can create a blank Word, Excel, PowerPoint or text file.">Nexo crea una carpeta por cada materia de tu horario, dentro de Documentos\Nexo\Tareas. Ahí mismo puedes crear un Word, un Excel, un PowerPoint o un texto en blanco.</p></li>
       <li><h3 data-en="18 document tools">18 herramientas de documentos</h3><p data-en="Merge, split, compress and convert PDF and Office files, add or remove a password (or recover one you forgot from a PDF of your own), and pull the text out of an image (OCR). It all happens on your computer: nothing is uploaded.">Une, divide, comprime y convierte PDF y archivos de Office, ponles contraseña, quítala (o recupérala si olvidaste la de un PDF tuyo), y saca el texto de una imagen (OCR). Todo se hace en tu computadora: no se sube nada.</p></li>
@@ -204,7 +204,7 @@
 </section>
 
 <!-- 4. Recorrido -->
-<section class="slide" id="recorrido" data-notas="Cambiar de pantalla con las teclas 1 a 7. Recordar que los datos de las capturas son inventados." data-notas-en="Switch screens with keys 1 to 7. Remind the audience that the data in the screenshots is made up.">
+<section class="slide" id="recorrido" data-notas="Cambiar de pantalla con las teclas 1 a 9. Recordar que los datos de las capturas son inventados." data-notas-en="Switch screens with keys 1 to 9. Remind the audience that the data in the screenshots is made up.">
   <div class="contenedor">
     <div class="encabezado">
       <p class="etiqueta" data-en="Tour">Recorrido</p>
@@ -223,7 +223,9 @@
       <button role="tab" aria-selected="false" data-tab="calendario" data-en="Calendar">Calendario</button>
       <button role="tab" aria-selected="false" data-tab="documentos" data-en="Documents">Documentos</button>
       <button role="tab" aria-selected="false" data-tab="dividir" data-en="Split a PDF">Dividir un PDF</button>
+      <button role="tab" aria-selected="false" data-tab="desbloquear" data-en="Unlock a PDF">Desbloquear un PDF</button>
       <button role="tab" aria-selected="false" data-tab="calculadora" data-en="Calculator">Calculadora</button>
+      <button role="tab" aria-selected="false" data-tab="promedio" data-en="Grade average">Promedio</button>
       <button role="tab" aria-selected="false" data-tab="repaso" data-en="Study cards">Repaso</button>
       <button role="tab" aria-selected="false" data-tab="ajustes" data-en="Settings">Configuración</button>
     </div>
@@ -244,9 +246,17 @@
         <div class="ventana"><img src="assets/capturas/dividir-pdf.webp" width="1728" height="1080" loading="lazy" alt="La herramienta para dividir un PDF." data-en-alt="The tool for splitting a PDF."></div>
         <figcaption data-en="Each tool takes a single step: choose the file, adjust what you need and you're done. The result lands next to the original.">Cada herramienta tiene un solo paso: eliges el archivo, ajustas lo que necesites y listo. El resultado queda junto al original.</figcaption>
       </figure>
+      <figure class="panel" data-panel="desbloquear">
+        <div class="ventana"><img src="assets/capturas/desbloquear-pdf.webp" width="1728" height="1080" loading="lazy" alt="La herramienta Desbloquear PDF, con sus cuatro formas de buscar la contraseña." data-en-alt="The Unlock PDF tool, with its four ways of searching for the password."></div>
+        <figcaption data-en="Forgot the password to one of your PDFs? Drop it in, press Unlock and Nexo looks for it on its own. Everything happens on your computer.">¿Olvidaste la contraseña de un PDF tuyo? Suéltalo, pulsa Desbloquear y Nexo la busca sola. Todo pasa en tu computadora.</figcaption>
+      </figure>
       <figure class="panel" data-panel="calculadora">
         <div class="ventana"><img src="assets/capturas/calculadora.webp" width="1728" height="1080" loading="lazy" alt="La calculadora." data-en-alt="The calculator."></div>
-        <figcaption data-en="Standard and scientific, with history, plus a grade average.">Estándar y científica, con historial, y un promedio de calificaciones.</figcaption>
+        <figcaption data-en="Standard and scientific, with history.">Estándar y científica, con historial.</figcaption>
+      </figure>
+      <figure class="panel" data-panel="promedio">
+        <div class="ventana"><img src="assets/capturas/promedio.webp" width="1728" height="1080" loading="lazy" alt="El promedio de calificaciones: tres materias con sus evaluaciones y lo que falta para aprobar." data-en-alt="The grade average: three subjects with their assessments and what's left to pass."></div>
+        <figcaption data-en="Write down your grades and see how you're doing and how much you need on what's left.">Apunta tus calificaciones y mira cómo vas y cuánto necesitas sacar en lo que falta.</figcaption>
       </figure>
       <figure class="panel" data-panel="repaso">
         <div class="ventana"><img src="assets/capturas/repaso.webp" width="1728" height="1080" loading="lazy" alt="Repaso: una tarjeta de estudio con su pregunta, su respuesta y los botones Otra vez, Bien y Fácil." data-en-alt="Study cards: a card with its question, its answer and the Again, Good and Easy buttons."></div>
